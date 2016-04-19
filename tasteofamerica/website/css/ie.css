@@ -1,0 +1,181 @@
+/* CSS Document */
+
+/* IE 7 Fixes */
+
+
+/* 
+	Ads Space
+-----------------------------*/
+.adSpace { margin-left: 45px; }
+
+.adRight { margin-left: 853px; }
+
+
+/* 
+	Content
+-----------------------------*/
+
+/* Voting Area */
+.votingBlock { margin-left: 415px; }
+
+.secondVoting { margin-left: 452px; }
+
+.votingBlock input { padding-top: 148px; position: absolute; }
+
+
+/* 
+	Brackets
+-----------------------------*/
+.southeast { clear: both; }
+
+
+/* 
+	Competitors
+-----------------------------*/
+			.competitor label strong { height: 16px; padding-top: 3px; }
+				.northeast .competitor label strong, .southeast .competitor label strong { padding-top: 5px; height: 14px; }	
+						
+			.competitor label em { height: 18px; padding-top: 1px; }
+				.northeast .competitor label em, .southeast .competitor label em { padding-top: 2px; height: 17px; }
+			
+			.competitor label span { height: 17px; padding-top: 6px; }
+				.northeast .competitor label span, .southeast .competitor label span { padding-top: 7px; height: 16px; }			
+			
+	.selection { margin-left: -129px; }
+		
+		.northeast .selection, .southeast .selection { margin-left: -137px; } /* East Bracket */
+		.finals .selection { margin-left: -7px; }
+		.finals .northeast .selection, .finals .southeast .selection { margin-left: -19px; }		
+		
+	.menu { margin-left: -1px; }
+	
+			/* Active State */			
+			.active .competitor label strong { height: 15px; padding-top: 4px; }
+			.active .competitor label em { height: 17px; padding-top: 2px;  }		
+	
+		.northeast .menu, .southeast .menu { margin-left: -460px; } /* East Bracket */		
+		.finals .menu { margin-left: 121px; }
+		.finals .northeast .menu, .finals .southeast .menu { margin-left: -342px; }			
+			
+	/* Picked */
+	.picked { margin-left: -145px; }
+	
+		.northeast .picked, .southeast .picked { margin-left: -5px; } /* East Bracket */	
+		.finals .picked { margin-left: -25px; } /* Final - West Bracket */	
+		.finals .northeast .picked, .finals .southeast .picked { margin-left: 119px; } /* East Bracket */		
+
+/* 
+	Footer
+-----------------------------*/
+	
+	/* Sponsors */
+		.sponsors li { display: inline; }
+		
+		
+/* 
+	AJAX Window
+-----------------------------*/
+		.ajaxWindow .buttonWell input { padding-top: 50px; }	
+		
+		
+		
+/* IE 6 Fixes */
+
+/* 
+	Header - 5/10/11
+-----------------------------*/
+* html .header img { width: 401px; height: 227px; behavior: url(css/iepngfix.htc); }
+
+/* 
+	Ads Space
+-----------------------------*/
+* html .adSpace { background-image: url(../images/backgrounds/bkg-adspace.gif); }
+
+
+/* 
+	Content Wrapper
+-----------------------------*/
+* html .contentWrapper { background: transparent none; } /* Added 5/27/12 */
+
+	* html .week1 { background: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/backgrounds/bkg-bracket_week1.png', sizingMethod='scope'); } /* Added 5/27/12 */
+	* html .week2 { background: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/backgrounds/bkg-bracket_week2.png', sizingMethod='scope'); }
+	* html .week3 { background: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/backgrounds/bkg-bracket_week3.png', sizingMethod='scope'); }
+	* html .week4 { background: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/backgrounds/bkg-bracket_week4.png', sizingMethod='scope'); }
+	* html .week5 { background: none; } 
+	
+/* 
+	Content
+-----------------------------*/
+* html .content { background: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/backgrounds/bkg-content.png', sizingMethod='scope'); }
+
+
+/* Voting Area */
+* html .votingBlock input { background-image: url(../images/links/link-vote.gif); }
+
+/* Match Ups */
+* html .matchup { background-image: url(../images/backgrounds/bkg-matchup.gif); }
+	/* html .finals .matchup { background-image: url(../images/backgrounds/bkg-matchup_winners.gif); } */
+	* html .finals .matchup { overflow: hidden; height: 88px; margin: 0 0 -12px; background: transparent none; }	
+	/* html .finals .northeast, * html .finals .southeast, * html .finals .west, * html .finals .midwest { float: none; margin: 0; }*/
+
+	
+/* 
+	Brackets
+-----------------------------*/
+* html .brackets { overflow: hidden; }
+
+
+/* 
+	Competitors
+-----------------------------*/	
+	* html .competitor { overflow: hidden; }	
+	
+	* html .selection { background-image: url(../images/backgrounds/bkg-selection.gif); }	
+			
+		* html .menu .top { background-image: url(../images/backgrounds/bkg-menu_top.gif); }
+		* html .menu .bottom { background-image: url(../images/backgrounds/bkg-menu_bottom.gif); }
+		
+		* html .menu .text { background-image: url(../images/backgrounds/bkg-menu.gif); }
+			
+	/* Picked */
+	* html .picked { background-image: url(../images/backgrounds/bkg-picked.gif); }
+			
+/* 
+	Footer
+-----------------------------*/
+* html .footer { height: 299px; }
+	
+	/* Sponsors */
+	* html .sponsors { height: 100px; position: relative; }
+	
+/* 
+	AJAX Window - Added 5/9/11
+-----------------------------*/
+* html .ajaxWindow { overflow: hidden; }
+
+	* html .ajaxWindow .text { height: 447px; }
+			
+	* html .ajaxWindow .scrollBox { height: 345px; }
+
+/* 
+	Homepage/Intro
+-----------------------------*/	
+
+/* Header */
+* html body.home .header img { width: 494px; height: 278px; behavior: url(css/iepngfix.htc); }
+
+* html body.home .contentWrapper { margin-bottom: -30px; background-image: url(../images/backgrounds/bkg-contentwrapper_home_ie6.png);  } /* Added 5/27/12 */
+
+		* html .col_b { margin-right: 25px; }
+
+/* Content - Changed 5/10/11 */
+* html body.home .content { background: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/backgrounds/bkg-content_home.png', sizingMethod='scope'); } /* Changed 5/27/12 */
+		* html .video { background-image: url(../images/backgrounds/bkg-video_ie6.png); }
+			* html .video a { background-image: url(../images/buttons/btn-playvideo.gif); }
+			
+			* html .start { position: relative; }
+
+
+/* Footer */
+* html body.home .footer { height: 121px; } /* Changed 5/27/12 */
+	
