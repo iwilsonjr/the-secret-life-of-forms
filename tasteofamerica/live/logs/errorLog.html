@@ -1,0 +1,3459 @@
+04-27-2015 8:11:58 PM<hr /> 
+   <style>
+
+
+	table.cfdump_wddx,
+	table.cfdump_xml,
+	table.cfdump_struct,
+	table.cfdump_varundefined,
+	table.cfdump_array,
+	table.cfdump_query,
+	table.cfdump_cfc,
+	table.cfdump_object,
+	table.cfdump_binary,
+	table.cfdump_udf,
+	table.cfdump_udfbody,
+	table.cfdump_udfarguments {
+		font-size: xx-small;
+		font-family: verdana, arial, helvetica, sans-serif;
+		cell-spacing: 2px;
+	}
+
+	table.cfdump_wddx th,
+	table.cfdump_xml th,
+	table.cfdump_struct th,
+	table.cfdump_varundefined th,
+	table.cfdump_array th,
+	table.cfdump_query th,
+	table.cfdump_cfc th,
+	table.cfdump_object th,
+	table.cfdump_binary th,
+	table.cfdump_udf th,
+	table.cfdump_udfbody th,
+	table.cfdump_udfarguments th {
+		text-align: left;
+		color: white;
+		padding: 5px;
+	}
+
+	table.cfdump_wddx td,
+	table.cfdump_xml td,
+	table.cfdump_struct td,
+	table.cfdump_varundefined  td,
+	table.cfdump_array td,
+	table.cfdump_query td,
+	table.cfdump_cfc td,
+	table.cfdump_object td,
+	table.cfdump_binary td,
+	table.cfdump_udf td,
+	table.cfdump_udfbody td,
+	table.cfdump_udfarguments td {
+		padding: 3px;
+		background-color: #ffffff;
+		vertical-align : top;
+	}
+
+	table.cfdump_wddx {
+		background-color: #000000;
+	}
+	table.cfdump_wddx th.wddx {
+		background-color: #444444;
+	}
+
+
+	table.cfdump_xml {
+		background-color: #888888;
+	}
+	table.cfdump_xml th.xml {
+		background-color: #aaaaaa;
+	}
+	table.cfdump_xml td.xml {
+		background-color: #dddddd;
+	}
+
+	table.cfdump_struct {
+		background-color: #0000cc ;
+	}
+	table.cfdump_struct th.struct {
+		background-color: #4444cc ;
+	}
+	table.cfdump_struct td.struct {
+		background-color: #ccddff;
+	}
+
+	table.cfdump_varundefined {
+		background-color: #CC3300 ;
+	}
+	table.cfdump_varundefined th.varundefined {
+		background-color: #CC3300 ;
+	}
+	table.cfdump_varundefined td.varundefined {
+		background-color: #ccddff;
+	}
+
+	table.cfdump_array {
+		background-color: #006600 ;
+	}
+	table.cfdump_array th.array {
+		background-color: #009900 ;
+	}
+	table.cfdump_array td.array {
+		background-color: #ccffcc ;
+	}
+
+	table.cfdump_query {
+		background-color: #884488 ;
+	}
+	table.cfdump_query th.query {
+		background-color: #aa66aa ;
+	}
+	table.cfdump_query td.query {
+		background-color: #ffddff ;
+	}
+
+
+	table.cfdump_cfc {
+		background-color: #ff0000;
+	}
+	table.cfdump_cfc th.cfc{
+		background-color: #ff4444;
+	}
+	table.cfdump_cfc td.cfc {
+		background-color: #ffcccc;
+	}
+
+
+	table.cfdump_object {
+		background-color : #ff0000;
+	}
+	table.cfdump_object th.object{
+		background-color: #ff4444;
+	}
+
+	table.cfdump_binary {
+		background-color : #eebb00;
+	}
+	table.cfdump_binary th.binary {
+		background-color: #ffcc44;
+	}
+	table.cfdump_binary td {
+		font-size: x-small;
+	}
+	table.cfdump_udf {
+		background-color: #aa4400;
+	}
+	table.cfdump_udf th.udf {
+		background-color: #cc6600;
+	}
+	table.cfdump_udfarguments {
+		background-color: #dddddd;
+		cell-spacing: 3;
+	}
+	table.cfdump_udfarguments th {
+		background-color: #eeeeee;
+		color: #000000;
+	}
+
+</style> <script language="javascript">
+
+
+// for queries we have more than one td element to collapse/expand
+	var expand = "open";
+
+	dump = function( obj ) {
+		var out = "" ;
+		if ( typeof obj == "object" ) {
+			for ( key in obj ) {
+				if ( typeof obj[key] != "function" ) out += key + ': ' + obj[key] + '<br>' ;
+			}
+		}
+	}
+
+
+	cfdump_toggleRow = function(source) {
+		//target is the right cell
+		if(document.all) target = source.parentElement.cells[1];
+		else {
+			var element = null;
+			var vLen = source.parentNode.childNodes.length;
+			for(var i=vLen-1;i>0;i--){
+				if(source.parentNode.childNodes[i].nodeType == 1){
+					element = source.parentNode.childNodes[i];
+					break;
+				}
+			}
+			if(element == null)
+				target = source.parentNode.lastChild;
+			else
+				target = element;
+		}
+		//target = source.parentNode.lastChild ;
+		cfdump_toggleTarget( target, cfdump_toggleSource( source ) ) ;
+	}
+
+	cfdump_toggleXmlDoc = function(source) {
+
+		var caption = source.innerHTML.split( ' [' ) ;
+
+		// toggle source (header)
+		if ( source.style.fontStyle == 'italic' ) {
+			// closed -> short
+			source.style.fontStyle = 'normal' ;
+			source.innerHTML = caption[0] + ' [short version]' ;
+			source.title = 'click to maximize' ;
+			switchLongToState = 'closed' ;
+			switchShortToState = 'open' ;
+		} else if ( source.innerHTML.indexOf('[short version]') != -1 ) {
+			// short -> full
+			source.innerHTML = caption[0] + ' [long version]' ;
+			source.title = 'click to collapse' ;
+			switchLongToState = 'open' ;
+			switchShortToState = 'closed' ;
+		} else {
+			// full -> closed
+			source.style.fontStyle = 'italic' ;
+			source.title = 'click to expand' ;
+			source.innerHTML = caption[0] ;
+			switchLongToState = 'closed' ;
+			switchShortToState = 'closed' ;
+		}
+
+		// Toggle the target (everething below the header row).
+		// First two rows are XMLComment and XMLRoot - they are part
+		// of the long dump, the rest are direct children - part of the
+		// short dump
+		if(document.all) {
+			var table = source.parentElement.parentElement ;
+			for ( var i = 1; i < table.rows.length; i++ ) {
+				target = table.rows[i] ;
+				if ( i < 3 ) cfdump_toggleTarget( target, switchLongToState ) ;
+				else cfdump_toggleTarget( target, switchShortToState ) ;
+			}
+		}
+		else {
+			var table = source.parentNode.parentNode ;
+			var row = 1;
+			for ( var i = 1; i < table.childNodes.length; i++ ) {
+				target = table.childNodes[i] ;
+				if( target.style ) {
+					if ( row < 3 ) {
+						cfdump_toggleTarget( target, switchLongToState ) ;
+					} else {
+						cfdump_toggleTarget( target, switchShortToState ) ;
+					}
+					row++;
+				}
+			}
+		}
+	}
+
+	cfdump_toggleTable = function(source) {
+
+		var switchToState = cfdump_toggleSource( source ) ;
+		if(document.all) {
+			var table = source.parentElement.parentElement ;
+			for ( var i = 1; i < table.rows.length; i++ ) {
+				target = table.rows[i] ;
+				cfdump_toggleTarget( target, switchToState ) ;
+			}
+		}
+		else {
+			var table = source.parentNode.parentNode ;
+			for ( var i = 1; i < table.childNodes.length; i++ ) {
+				target = table.childNodes[i] ;
+				if(target.style) {
+					cfdump_toggleTarget( target, switchToState ) ;
+				}
+			}
+		}
+	}
+
+	cfdump_toggleSource = function( source ) {
+		if ( source.style.fontStyle == 'italic' || source.style.fontStyle == null) {
+			source.style.fontStyle = 'normal' ;
+			source.title = 'click to collapse' ;
+			return 'open' ;
+		} else {
+			source.style.fontStyle = 'italic' ;
+			source.title = 'click to expand' ;
+			return 'closed' ;
+		}
+	}
+
+	cfdump_toggleTarget = function( target, switchToState ) {
+		if ( switchToState == 'open' )	target.style.display = '' ;
+		else target.style.display = 'none' ;
+	}
+
+	// collapse all td elements for queries
+	cfdump_toggleRow_qry = function(source) {
+		expand = (source.title == "click to collapse") ? "closed" : "open";
+		if(document.all) {
+			var nbrChildren = source.parentElement.cells.length;
+			if(nbrChildren > 1){
+				for(i=nbrChildren-1;i>0;i--){
+					target = source.parentElement.cells[i];
+					cfdump_toggleTarget( target,expand ) ;
+					cfdump_toggleSource_qry(source);
+				}
+			}
+			else {
+				//target is the right cell
+				target = source.parentElement.cells[1];
+				cfdump_toggleTarget( target, cfdump_toggleSource( source ) ) ;
+			}
+		}
+		else{
+			var target = null;
+			var vLen = source.parentNode.childNodes.length;
+			for(var i=vLen-1;i>1;i--){
+				if(source.parentNode.childNodes[i].nodeType == 1){
+					target = source.parentNode.childNodes[i];
+					cfdump_toggleTarget( target,expand );
+					cfdump_toggleSource_qry(source);
+				}
+			}
+			if(target == null){
+				//target is the last cell
+				target = source.parentNode.lastChild;
+				cfdump_toggleTarget( target, cfdump_toggleSource( source ) ) ;
+			}
+		}
+	}
+
+	cfdump_toggleSource_qry = function(source) {
+		if(expand == "closed"){
+			source.title = "click to expand";
+			source.style.fontStyle = "italic";
+		}
+		else{
+			source.title = "click to collapse";
+			source.style.fontStyle = "normal";
+		}
+	}
+
+</script> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Cause</td>
+					<td>
+					
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Detail</td>
+					<td>
+					[empty string] 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ErrNumber</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Message</td>
+					<td>
+					Element G is undefined in FORM. 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Resolvedname</td>
+					<td>
+					FORM 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">StackTrace</td>
+					<td>
+					coldfusion.runtime.UndefinedElementException: Element G is undefined in FORM.
+	at coldfusion.runtime.CfJspPage.resolveCanonicalName(CfJspPage.java:1773)
+	at coldfusion.runtime.CfJspPage._resolve(CfJspPage.java:1726)
+	at coldfusion.runtime.CfJspPage._resolveAndAutoscalarize(CfJspPage.java:1875)
+	at coldfusion.runtime.CfJspPage._resolveAndAutoscalarize(CfJspPage.java:1854)
+	at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17)
+	at coldfusion.runtime.CfJspPage.invoke(CfJspPage.java:246)
+	at coldfusion.tagext.lang.IncludeTag.handlePageInvoke(IncludeTag.java:736)
+	at coldfusion.tagext.lang.IncludeTag.doStartTag(IncludeTag.java:572)
+	at coldfusion.runtime.CfJspPage._emptyTcfTag(CfJspPage.java:2986)
+	at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:487)
+	at coldfusion.runtime.UDFMethod$ReturnTypeFilter.invoke(UDFMethod.java:420)
+	at coldfusion.runtime.UDFMethod$ArgumentCollectionFilter.invoke(UDFMethod.java:383)
+	at coldfusion.filter.FunctionAccessFilter.invoke(FunctionAccessFilter.java:95)
+	at coldfusion.runtime.UDFMethod.runFilterChain(UDFMethod.java:334)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:231)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:643)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:432)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:402)
+	at coldfusion.runtime.AppEventInvoker.invoke(AppEventInvoker.java:108)
+	at coldfusion.runtime.AppEventInvoker.onRequest(AppEventInvoker.java:301)
+	at coldfusion.filter.ApplicationFilter.invoke(ApplicationFilter.java:462)
+	at coldfusion.filter.RequestMonitorFilter.invoke(RequestMonitorFilter.java:42)
+	at coldfusion.filter.MonitoringFilter.invoke(MonitoringFilter.java:40)
+	at coldfusion.filter.PathFilter.invoke(PathFilter.java:142)
+	at coldfusion.filter.ExceptionFilter.invoke(ExceptionFilter.java:94)
+	at coldfusion.filter.ClientScopePersistenceFilter.invoke(ClientScopePersistenceFilter.java:28)
+	at coldfusion.filter.BrowserFilter.invoke(BrowserFilter.java:38)
+	at coldfusion.filter.NoCacheFilter.invoke(NoCacheFilter.java:58)
+	at coldfusion.filter.GlobalsFilter.invoke(GlobalsFilter.java:38)
+	at coldfusion.filter.DatasourceFilter.invoke(DatasourceFilter.java:22)
+	at coldfusion.filter.CachingFilter.invoke(CachingFilter.java:62)
+	at coldfusion.filter.RequestThrottleFilter.invoke(RequestThrottleFilter.java:151)
+	at coldfusion.CfmServlet.service(CfmServlet.java:219)
+	at coldfusion.bootstrap.BootstrapServlet.service(BootstrapServlet.java:89)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at coldfusion.monitor.event.MonitoringServletFilter.doFilter(MonitoringServletFilter.java:42)
+	at coldfusion.bootstrap.BootstrapFilter.doFilter(BootstrapFilter.java:46)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:422)
+	at org.apache.coyote.ajp.AjpProcessor.process(AjpProcessor.java:199)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:607)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:314)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Suppressed</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array [empty]
+				</th></tr>
+				
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TagContext</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array
+				</th></tr>
+				
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">1</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					?? 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					17 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">2</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					CFINCLUDE 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					29 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Type</td>
+					<td>
+					Expression 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">element</td>
+					<td>
+					G 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">objectType</td>
+					<td>
+					
+				<table class="cfdump_object">
+				<tr><th class="object" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse"> object of java.lang.Class<br>
+				
+				</th></tr>
+				
+						<tr>
+							<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Class Name</td>
+							<td>java.lang.Class</td>
+						</tr>
+					
+							<tr>
+								<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Methods</td>
+								<td>
+								<table class="cfdump_object">
+									<tr><th class="object"  onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">Method
+
+										</th>
+										<th class="object"  onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">Return Type
+										</th>
+									</tr>
+						
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">asSubclass(java.lang.Class)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">cast(java.lang.Object)</td>
+										<td>java.lang.Object</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">desiredAssertionStatus()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">forName(java.lang.String)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">forName(java.lang.String, boolean, java.lang.ClassLoader)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotatedInterfaces()</td>
+										<td>java.lang.reflect.AnnotatedType[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotatedSuperclass()</td>
+										<td>java.lang.reflect.AnnotatedType</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotation(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotations()</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotationsByType(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getCanonicalName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getClassLoader()</td>
+										<td>java.lang.ClassLoader</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getClasses()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getComponentType()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getConstructor(java.lang.Class[])</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getConstructors()</td>
+										<td>java.lang.reflect.Constructor[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotation(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotations()</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotationsByType(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredClasses()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredConstructor(java.lang.Class[])</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredConstructors()</td>
+										<td>java.lang.reflect.Constructor[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredField(java.lang.String)</td>
+										<td>java.lang.reflect.Field</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredFields()</td>
+										<td>java.lang.reflect.Field[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredMethod(java.lang.String, java.lang.Class[])</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredMethods()</td>
+										<td>java.lang.reflect.Method[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaringClass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingClass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingConstructor()</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingMethod()</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnumConstants()</td>
+										<td>java.lang.Object[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getField(java.lang.String)</td>
+										<td>java.lang.reflect.Field</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getFields()</td>
+										<td>java.lang.reflect.Field[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getGenericInterfaces()</td>
+										<td>java.lang.reflect.Type[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getGenericSuperclass()</td>
+										<td>java.lang.reflect.Type</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getInterfaces()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getMethod(java.lang.String, java.lang.Class[])</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getMethods()</td>
+										<td>java.lang.reflect.Method[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getModifiers()</td>
+										<td>int</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getPackage()</td>
+										<td>java.lang.Package</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getProtectionDomain()</td>
+										<td>java.security.ProtectionDomain</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getResource(java.lang.String)</td>
+										<td>java.net.URL</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getResourceAsStream(java.lang.String)</td>
+										<td>java.io.InputStream</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSigners()</td>
+										<td>java.lang.Object[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSimpleName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSuperclass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getTypeName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getTypeParameters()</td>
+										<td>java.lang.reflect.TypeVariable[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnnotation()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnnotationPresent(java.lang.Class)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnonymousClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isArray()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAssignableFrom(java.lang.Class)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isEnum()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isInstance(java.lang.Object)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isInterface()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isLocalClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isMemberClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isPrimitive()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isSynthetic()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">newInstance()</td>
+										<td>java.lang.Object</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">toGenericString()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">toString()</td>
+										<td>java.lang.String</td>
+									</tr>
+								</table></td></tr> 
+				</table>
+				
+					</td>
+					</tr>
+					
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Detail</td>
+					<td>
+					An exception occurred while invoking an event handler method from Application.cfc. The method name is: onRequest. 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Message</td>
+					<td>
+					Event handler exception. 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RootCause</td>
+					<td>
+					
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Detail</td>
+					<td>
+					[empty string] 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ErrNumber</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Message</td>
+					<td>
+					Element G is undefined in FORM. 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Resolvedname</td>
+					<td>
+					FORM 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">StackTrace</td>
+					<td>
+					coldfusion.runtime.UndefinedElementException: Element G is undefined in FORM.
+	at coldfusion.runtime.CfJspPage.resolveCanonicalName(CfJspPage.java:1773)
+	at coldfusion.runtime.CfJspPage._resolve(CfJspPage.java:1726)
+	at coldfusion.runtime.CfJspPage._resolveAndAutoscalarize(CfJspPage.java:1875)
+	at coldfusion.runtime.CfJspPage._resolveAndAutoscalarize(CfJspPage.java:1854)
+	at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17)
+	at coldfusion.runtime.CfJspPage.invoke(CfJspPage.java:246)
+	at coldfusion.tagext.lang.IncludeTag.handlePageInvoke(IncludeTag.java:736)
+	at coldfusion.tagext.lang.IncludeTag.doStartTag(IncludeTag.java:572)
+	at coldfusion.runtime.CfJspPage._emptyTcfTag(CfJspPage.java:2986)
+	at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:487)
+	at coldfusion.runtime.UDFMethod$ReturnTypeFilter.invoke(UDFMethod.java:420)
+	at coldfusion.runtime.UDFMethod$ArgumentCollectionFilter.invoke(UDFMethod.java:383)
+	at coldfusion.filter.FunctionAccessFilter.invoke(FunctionAccessFilter.java:95)
+	at coldfusion.runtime.UDFMethod.runFilterChain(UDFMethod.java:334)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:231)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:643)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:432)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:402)
+	at coldfusion.runtime.AppEventInvoker.invoke(AppEventInvoker.java:108)
+	at coldfusion.runtime.AppEventInvoker.onRequest(AppEventInvoker.java:301)
+	at coldfusion.filter.ApplicationFilter.invoke(ApplicationFilter.java:462)
+	at coldfusion.filter.RequestMonitorFilter.invoke(RequestMonitorFilter.java:42)
+	at coldfusion.filter.MonitoringFilter.invoke(MonitoringFilter.java:40)
+	at coldfusion.filter.PathFilter.invoke(PathFilter.java:142)
+	at coldfusion.filter.ExceptionFilter.invoke(ExceptionFilter.java:94)
+	at coldfusion.filter.ClientScopePersistenceFilter.invoke(ClientScopePersistenceFilter.java:28)
+	at coldfusion.filter.BrowserFilter.invoke(BrowserFilter.java:38)
+	at coldfusion.filter.NoCacheFilter.invoke(NoCacheFilter.java:58)
+	at coldfusion.filter.GlobalsFilter.invoke(GlobalsFilter.java:38)
+	at coldfusion.filter.DatasourceFilter.invoke(DatasourceFilter.java:22)
+	at coldfusion.filter.CachingFilter.invoke(CachingFilter.java:62)
+	at coldfusion.filter.RequestThrottleFilter.invoke(RequestThrottleFilter.java:151)
+	at coldfusion.CfmServlet.service(CfmServlet.java:219)
+	at coldfusion.bootstrap.BootstrapServlet.service(BootstrapServlet.java:89)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at coldfusion.monitor.event.MonitoringServletFilter.doFilter(MonitoringServletFilter.java:42)
+	at coldfusion.bootstrap.BootstrapFilter.doFilter(BootstrapFilter.java:46)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:422)
+	at org.apache.coyote.ajp.AjpProcessor.process(AjpProcessor.java:199)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:607)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:314)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Suppressed</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array [empty]
+				</th></tr>
+				
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TagContext</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array
+				</th></tr>
+				
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">1</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					?? 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					17 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">2</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					CFINCLUDE 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					29 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Type</td>
+					<td>
+					Expression 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">element</td>
+					<td>
+					G 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">objectType</td>
+					<td>
+					
+				<table class="cfdump_object">
+				<tr><th class="object" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse"> object of java.lang.Class<br>
+				
+				</th></tr>
+				
+						<tr>
+							<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Class Name</td>
+							<td>java.lang.Class</td>
+						</tr>
+					
+							<tr>
+								<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Methods</td>
+								<td>
+								<table class="cfdump_object">
+									<tr><th class="object"  onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">Method
+
+										</th>
+										<th class="object"  onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">Return Type
+										</th>
+									</tr>
+						
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">asSubclass(java.lang.Class)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">cast(java.lang.Object)</td>
+										<td>java.lang.Object</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">desiredAssertionStatus()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">forName(java.lang.String)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">forName(java.lang.String, boolean, java.lang.ClassLoader)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotatedInterfaces()</td>
+										<td>java.lang.reflect.AnnotatedType[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotatedSuperclass()</td>
+										<td>java.lang.reflect.AnnotatedType</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotation(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotations()</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotationsByType(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getCanonicalName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getClassLoader()</td>
+										<td>java.lang.ClassLoader</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getClasses()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getComponentType()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getConstructor(java.lang.Class[])</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getConstructors()</td>
+										<td>java.lang.reflect.Constructor[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotation(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotations()</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotationsByType(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredClasses()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredConstructor(java.lang.Class[])</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredConstructors()</td>
+										<td>java.lang.reflect.Constructor[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredField(java.lang.String)</td>
+										<td>java.lang.reflect.Field</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredFields()</td>
+										<td>java.lang.reflect.Field[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredMethod(java.lang.String, java.lang.Class[])</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredMethods()</td>
+										<td>java.lang.reflect.Method[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaringClass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingClass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingConstructor()</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingMethod()</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnumConstants()</td>
+										<td>java.lang.Object[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getField(java.lang.String)</td>
+										<td>java.lang.reflect.Field</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getFields()</td>
+										<td>java.lang.reflect.Field[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getGenericInterfaces()</td>
+										<td>java.lang.reflect.Type[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getGenericSuperclass()</td>
+										<td>java.lang.reflect.Type</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getInterfaces()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getMethod(java.lang.String, java.lang.Class[])</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getMethods()</td>
+										<td>java.lang.reflect.Method[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getModifiers()</td>
+										<td>int</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getPackage()</td>
+										<td>java.lang.Package</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getProtectionDomain()</td>
+										<td>java.security.ProtectionDomain</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getResource(java.lang.String)</td>
+										<td>java.net.URL</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getResourceAsStream(java.lang.String)</td>
+										<td>java.io.InputStream</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSigners()</td>
+										<td>java.lang.Object[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSimpleName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSuperclass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getTypeName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getTypeParameters()</td>
+										<td>java.lang.reflect.TypeVariable[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnnotation()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnnotationPresent(java.lang.Class)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnonymousClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isArray()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAssignableFrom(java.lang.Class)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isEnum()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isInstance(java.lang.Object)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isInterface()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isLocalClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isMemberClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isPrimitive()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isSynthetic()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">newInstance()</td>
+										<td>java.lang.Object</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">toGenericString()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">toString()</td>
+										<td>java.lang.String</td>
+									</tr>
+								</table></td></tr> 
+				</table>
+				
+					</td>
+					</tr>
+					
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">StackTrace</td>
+					<td>
+					coldfusion.runtime.EventHandlerException: Event handler exception.
+	at coldfusion.runtime.AppEventInvoker.onRequest(AppEventInvoker.java:309)
+	at coldfusion.filter.ApplicationFilter.invoke(ApplicationFilter.java:462)
+	at coldfusion.filter.RequestMonitorFilter.invoke(RequestMonitorFilter.java:42)
+	at coldfusion.filter.MonitoringFilter.invoke(MonitoringFilter.java:40)
+	at coldfusion.filter.PathFilter.invoke(PathFilter.java:142)
+	at coldfusion.filter.ExceptionFilter.invoke(ExceptionFilter.java:94)
+	at coldfusion.filter.ClientScopePersistenceFilter.invoke(ClientScopePersistenceFilter.java:28)
+	at coldfusion.filter.BrowserFilter.invoke(BrowserFilter.java:38)
+	at coldfusion.filter.NoCacheFilter.invoke(NoCacheFilter.java:58)
+	at coldfusion.filter.GlobalsFilter.invoke(GlobalsFilter.java:38)
+	at coldfusion.filter.DatasourceFilter.invoke(DatasourceFilter.java:22)
+	at coldfusion.filter.CachingFilter.invoke(CachingFilter.java:62)
+	at coldfusion.filter.RequestThrottleFilter.invoke(RequestThrottleFilter.java:151)
+	at coldfusion.CfmServlet.service(CfmServlet.java:219)
+	at coldfusion.bootstrap.BootstrapServlet.service(BootstrapServlet.java:89)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at coldfusion.monitor.event.MonitoringServletFilter.doFilter(MonitoringServletFilter.java:42)
+	at coldfusion.bootstrap.BootstrapFilter.doFilter(BootstrapFilter.java:46)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:422)
+	at org.apache.coyote.ajp.AjpProcessor.process(AjpProcessor.java:199)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:607)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:314)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: coldfusion.runtime.UndefinedElementException: Element G is undefined in FORM.
+	at coldfusion.runtime.CfJspPage.resolveCanonicalName(CfJspPage.java:1773)
+	at coldfusion.runtime.CfJspPage._resolve(CfJspPage.java:1726)
+	at coldfusion.runtime.CfJspPage._resolveAndAutoscalarize(CfJspPage.java:1875)
+	at coldfusion.runtime.CfJspPage._resolveAndAutoscalarize(CfJspPage.java:1854)
+	at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17)
+	at coldfusion.runtime.CfJspPage.invoke(CfJspPage.java:246)
+	at coldfusion.tagext.lang.IncludeTag.handlePageInvoke(IncludeTag.java:736)
+	at coldfusion.tagext.lang.IncludeTag.doStartTag(IncludeTag.java:572)
+	at coldfusion.runtime.CfJspPage._emptyTcfTag(CfJspPage.java:2986)
+	at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:487)
+	at coldfusion.runtime.UDFMethod$ReturnTypeFilter.invoke(UDFMethod.java:420)
+	at coldfusion.runtime.UDFMethod$ArgumentCollectionFilter.invoke(UDFMethod.java:383)
+	at coldfusion.filter.FunctionAccessFilter.invoke(FunctionAccessFilter.java:95)
+	at coldfusion.runtime.UDFMethod.runFilterChain(UDFMethod.java:334)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:231)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:643)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:432)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:402)
+	at coldfusion.runtime.AppEventInvoker.invoke(AppEventInvoker.java:108)
+	at coldfusion.runtime.AppEventInvoker.onRequest(AppEventInvoker.java:301)
+	... 34 more 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Suppressed</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array [empty]
+				</th></tr>
+				
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TagContext</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array
+				</th></tr>
+				
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">1</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					?? 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					17 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">2</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					CFINCLUDE 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					29 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Type</td>
+					<td>
+					Expression 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">name</td>
+					<td>
+					onRequest 
+					</td>
+					</tr>
+					
+			</table>
+		
+   <hr />
+  04-27-2015 8:19:06 PM<hr /> 
+   <style>
+
+
+	table.cfdump_wddx,
+	table.cfdump_xml,
+	table.cfdump_struct,
+	table.cfdump_varundefined,
+	table.cfdump_array,
+	table.cfdump_query,
+	table.cfdump_cfc,
+	table.cfdump_object,
+	table.cfdump_binary,
+	table.cfdump_udf,
+	table.cfdump_udfbody,
+	table.cfdump_udfarguments {
+		font-size: xx-small;
+		font-family: verdana, arial, helvetica, sans-serif;
+		cell-spacing: 2px;
+	}
+
+	table.cfdump_wddx th,
+	table.cfdump_xml th,
+	table.cfdump_struct th,
+	table.cfdump_varundefined th,
+	table.cfdump_array th,
+	table.cfdump_query th,
+	table.cfdump_cfc th,
+	table.cfdump_object th,
+	table.cfdump_binary th,
+	table.cfdump_udf th,
+	table.cfdump_udfbody th,
+	table.cfdump_udfarguments th {
+		text-align: left;
+		color: white;
+		padding: 5px;
+	}
+
+	table.cfdump_wddx td,
+	table.cfdump_xml td,
+	table.cfdump_struct td,
+	table.cfdump_varundefined  td,
+	table.cfdump_array td,
+	table.cfdump_query td,
+	table.cfdump_cfc td,
+	table.cfdump_object td,
+	table.cfdump_binary td,
+	table.cfdump_udf td,
+	table.cfdump_udfbody td,
+	table.cfdump_udfarguments td {
+		padding: 3px;
+		background-color: #ffffff;
+		vertical-align : top;
+	}
+
+	table.cfdump_wddx {
+		background-color: #000000;
+	}
+	table.cfdump_wddx th.wddx {
+		background-color: #444444;
+	}
+
+
+	table.cfdump_xml {
+		background-color: #888888;
+	}
+	table.cfdump_xml th.xml {
+		background-color: #aaaaaa;
+	}
+	table.cfdump_xml td.xml {
+		background-color: #dddddd;
+	}
+
+	table.cfdump_struct {
+		background-color: #0000cc ;
+	}
+	table.cfdump_struct th.struct {
+		background-color: #4444cc ;
+	}
+	table.cfdump_struct td.struct {
+		background-color: #ccddff;
+	}
+
+	table.cfdump_varundefined {
+		background-color: #CC3300 ;
+	}
+	table.cfdump_varundefined th.varundefined {
+		background-color: #CC3300 ;
+	}
+	table.cfdump_varundefined td.varundefined {
+		background-color: #ccddff;
+	}
+
+	table.cfdump_array {
+		background-color: #006600 ;
+	}
+	table.cfdump_array th.array {
+		background-color: #009900 ;
+	}
+	table.cfdump_array td.array {
+		background-color: #ccffcc ;
+	}
+
+	table.cfdump_query {
+		background-color: #884488 ;
+	}
+	table.cfdump_query th.query {
+		background-color: #aa66aa ;
+	}
+	table.cfdump_query td.query {
+		background-color: #ffddff ;
+	}
+
+
+	table.cfdump_cfc {
+		background-color: #ff0000;
+	}
+	table.cfdump_cfc th.cfc{
+		background-color: #ff4444;
+	}
+	table.cfdump_cfc td.cfc {
+		background-color: #ffcccc;
+	}
+
+
+	table.cfdump_object {
+		background-color : #ff0000;
+	}
+	table.cfdump_object th.object{
+		background-color: #ff4444;
+	}
+
+	table.cfdump_binary {
+		background-color : #eebb00;
+	}
+	table.cfdump_binary th.binary {
+		background-color: #ffcc44;
+	}
+	table.cfdump_binary td {
+		font-size: x-small;
+	}
+	table.cfdump_udf {
+		background-color: #aa4400;
+	}
+	table.cfdump_udf th.udf {
+		background-color: #cc6600;
+	}
+	table.cfdump_udfarguments {
+		background-color: #dddddd;
+		cell-spacing: 3;
+	}
+	table.cfdump_udfarguments th {
+		background-color: #eeeeee;
+		color: #000000;
+	}
+
+</style> <script language="javascript">
+
+
+// for queries we have more than one td element to collapse/expand
+	var expand = "open";
+
+	dump = function( obj ) {
+		var out = "" ;
+		if ( typeof obj == "object" ) {
+			for ( key in obj ) {
+				if ( typeof obj[key] != "function" ) out += key + ': ' + obj[key] + '<br>' ;
+			}
+		}
+	}
+
+
+	cfdump_toggleRow = function(source) {
+		//target is the right cell
+		if(document.all) target = source.parentElement.cells[1];
+		else {
+			var element = null;
+			var vLen = source.parentNode.childNodes.length;
+			for(var i=vLen-1;i>0;i--){
+				if(source.parentNode.childNodes[i].nodeType == 1){
+					element = source.parentNode.childNodes[i];
+					break;
+				}
+			}
+			if(element == null)
+				target = source.parentNode.lastChild;
+			else
+				target = element;
+		}
+		//target = source.parentNode.lastChild ;
+		cfdump_toggleTarget( target, cfdump_toggleSource( source ) ) ;
+	}
+
+	cfdump_toggleXmlDoc = function(source) {
+
+		var caption = source.innerHTML.split( ' [' ) ;
+
+		// toggle source (header)
+		if ( source.style.fontStyle == 'italic' ) {
+			// closed -> short
+			source.style.fontStyle = 'normal' ;
+			source.innerHTML = caption[0] + ' [short version]' ;
+			source.title = 'click to maximize' ;
+			switchLongToState = 'closed' ;
+			switchShortToState = 'open' ;
+		} else if ( source.innerHTML.indexOf('[short version]') != -1 ) {
+			// short -> full
+			source.innerHTML = caption[0] + ' [long version]' ;
+			source.title = 'click to collapse' ;
+			switchLongToState = 'open' ;
+			switchShortToState = 'closed' ;
+		} else {
+			// full -> closed
+			source.style.fontStyle = 'italic' ;
+			source.title = 'click to expand' ;
+			source.innerHTML = caption[0] ;
+			switchLongToState = 'closed' ;
+			switchShortToState = 'closed' ;
+		}
+
+		// Toggle the target (everething below the header row).
+		// First two rows are XMLComment and XMLRoot - they are part
+		// of the long dump, the rest are direct children - part of the
+		// short dump
+		if(document.all) {
+			var table = source.parentElement.parentElement ;
+			for ( var i = 1; i < table.rows.length; i++ ) {
+				target = table.rows[i] ;
+				if ( i < 3 ) cfdump_toggleTarget( target, switchLongToState ) ;
+				else cfdump_toggleTarget( target, switchShortToState ) ;
+			}
+		}
+		else {
+			var table = source.parentNode.parentNode ;
+			var row = 1;
+			for ( var i = 1; i < table.childNodes.length; i++ ) {
+				target = table.childNodes[i] ;
+				if( target.style ) {
+					if ( row < 3 ) {
+						cfdump_toggleTarget( target, switchLongToState ) ;
+					} else {
+						cfdump_toggleTarget( target, switchShortToState ) ;
+					}
+					row++;
+				}
+			}
+		}
+	}
+
+	cfdump_toggleTable = function(source) {
+
+		var switchToState = cfdump_toggleSource( source ) ;
+		if(document.all) {
+			var table = source.parentElement.parentElement ;
+			for ( var i = 1; i < table.rows.length; i++ ) {
+				target = table.rows[i] ;
+				cfdump_toggleTarget( target, switchToState ) ;
+			}
+		}
+		else {
+			var table = source.parentNode.parentNode ;
+			for ( var i = 1; i < table.childNodes.length; i++ ) {
+				target = table.childNodes[i] ;
+				if(target.style) {
+					cfdump_toggleTarget( target, switchToState ) ;
+				}
+			}
+		}
+	}
+
+	cfdump_toggleSource = function( source ) {
+		if ( source.style.fontStyle == 'italic' || source.style.fontStyle == null) {
+			source.style.fontStyle = 'normal' ;
+			source.title = 'click to collapse' ;
+			return 'open' ;
+		} else {
+			source.style.fontStyle = 'italic' ;
+			source.title = 'click to expand' ;
+			return 'closed' ;
+		}
+	}
+
+	cfdump_toggleTarget = function( target, switchToState ) {
+		if ( switchToState == 'open' )	target.style.display = '' ;
+		else target.style.display = 'none' ;
+	}
+
+	// collapse all td elements for queries
+	cfdump_toggleRow_qry = function(source) {
+		expand = (source.title == "click to collapse") ? "closed" : "open";
+		if(document.all) {
+			var nbrChildren = source.parentElement.cells.length;
+			if(nbrChildren > 1){
+				for(i=nbrChildren-1;i>0;i--){
+					target = source.parentElement.cells[i];
+					cfdump_toggleTarget( target,expand ) ;
+					cfdump_toggleSource_qry(source);
+				}
+			}
+			else {
+				//target is the right cell
+				target = source.parentElement.cells[1];
+				cfdump_toggleTarget( target, cfdump_toggleSource( source ) ) ;
+			}
+		}
+		else{
+			var target = null;
+			var vLen = source.parentNode.childNodes.length;
+			for(var i=vLen-1;i>1;i--){
+				if(source.parentNode.childNodes[i].nodeType == 1){
+					target = source.parentNode.childNodes[i];
+					cfdump_toggleTarget( target,expand );
+					cfdump_toggleSource_qry(source);
+				}
+			}
+			if(target == null){
+				//target is the last cell
+				target = source.parentNode.lastChild;
+				cfdump_toggleTarget( target, cfdump_toggleSource( source ) ) ;
+			}
+		}
+	}
+
+	cfdump_toggleSource_qry = function(source) {
+		if(expand == "closed"){
+			source.title = "click to expand";
+			source.style.fontStyle = "italic";
+		}
+		else{
+			source.title = "click to collapse";
+			source.style.fontStyle = "normal";
+		}
+	}
+
+</script> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Cause</td>
+					<td>
+					
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Detail</td>
+					<td>
+					[empty string] 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ErrNumber</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Message</td>
+					<td>
+					Element G-RECAPTCHA-RESPONSE is undefined in a Java object of type class coldfusion.filter.FormScope. 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Resolvedname</td>
+					<td>
+					[empty string] 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">StackTrace</td>
+					<td>
+					coldfusion.runtime.UndefinedElementException: Element G-RECAPTCHA-RESPONSE is undefined in a Java object of type class coldfusion.filter.FormScope.
+	at coldfusion.runtime.CfJspPage.ArrayGetAt(CfJspPage.java:972)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:983)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:978)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:745)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:731)
+	at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17)
+	at coldfusion.runtime.CfJspPage.invoke(CfJspPage.java:246)
+	at coldfusion.tagext.lang.IncludeTag.handlePageInvoke(IncludeTag.java:736)
+	at coldfusion.tagext.lang.IncludeTag.doStartTag(IncludeTag.java:572)
+	at coldfusion.runtime.CfJspPage._emptyTcfTag(CfJspPage.java:2986)
+	at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:487)
+	at coldfusion.runtime.UDFMethod$ReturnTypeFilter.invoke(UDFMethod.java:420)
+	at coldfusion.runtime.UDFMethod$ArgumentCollectionFilter.invoke(UDFMethod.java:383)
+	at coldfusion.filter.FunctionAccessFilter.invoke(FunctionAccessFilter.java:95)
+	at coldfusion.runtime.UDFMethod.runFilterChain(UDFMethod.java:334)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:231)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:643)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:432)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:402)
+	at coldfusion.runtime.AppEventInvoker.invoke(AppEventInvoker.java:108)
+	at coldfusion.runtime.AppEventInvoker.onRequest(AppEventInvoker.java:301)
+	at coldfusion.filter.ApplicationFilter.invoke(ApplicationFilter.java:462)
+	at coldfusion.filter.RequestMonitorFilter.invoke(RequestMonitorFilter.java:42)
+	at coldfusion.filter.MonitoringFilter.invoke(MonitoringFilter.java:40)
+	at coldfusion.filter.PathFilter.invoke(PathFilter.java:142)
+	at coldfusion.filter.ExceptionFilter.invoke(ExceptionFilter.java:94)
+	at coldfusion.filter.ClientScopePersistenceFilter.invoke(ClientScopePersistenceFilter.java:28)
+	at coldfusion.filter.BrowserFilter.invoke(BrowserFilter.java:38)
+	at coldfusion.filter.NoCacheFilter.invoke(NoCacheFilter.java:58)
+	at coldfusion.filter.GlobalsFilter.invoke(GlobalsFilter.java:38)
+	at coldfusion.filter.DatasourceFilter.invoke(DatasourceFilter.java:22)
+	at coldfusion.filter.CachingFilter.invoke(CachingFilter.java:62)
+	at coldfusion.CfmServlet.service(CfmServlet.java:219)
+	at coldfusion.bootstrap.BootstrapServlet.service(BootstrapServlet.java:89)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at coldfusion.monitor.event.MonitoringServletFilter.doFilter(MonitoringServletFilter.java:42)
+	at coldfusion.bootstrap.BootstrapFilter.doFilter(BootstrapFilter.java:46)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:422)
+	at org.apache.coyote.ajp.AjpProcessor.process(AjpProcessor.java:199)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:607)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:314)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Suppressed</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array [empty]
+				</th></tr>
+				
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TagContext</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array
+				</th></tr>
+				
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">1</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					?? 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					17 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">2</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					CFINCLUDE 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					29 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Type</td>
+					<td>
+					Expression 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">element</td>
+					<td>
+					G-RECAPTCHA-RESPONSE 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">objectType</td>
+					<td>
+					
+				<table class="cfdump_object">
+				<tr><th class="object" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse"> object of java.lang.Class<br>
+				
+				</th></tr>
+				
+						<tr>
+							<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Class Name</td>
+							<td>java.lang.Class</td>
+						</tr>
+					
+							<tr>
+								<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Methods</td>
+								<td>
+								<table class="cfdump_object">
+									<tr><th class="object"  onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">Method
+
+										</th>
+										<th class="object"  onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">Return Type
+										</th>
+									</tr>
+						
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">asSubclass(java.lang.Class)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">cast(java.lang.Object)</td>
+										<td>java.lang.Object</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">desiredAssertionStatus()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">forName(java.lang.String)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">forName(java.lang.String, boolean, java.lang.ClassLoader)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotatedInterfaces()</td>
+										<td>java.lang.reflect.AnnotatedType[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotatedSuperclass()</td>
+										<td>java.lang.reflect.AnnotatedType</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotation(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotations()</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotationsByType(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getCanonicalName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getClassLoader()</td>
+										<td>java.lang.ClassLoader</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getClasses()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getComponentType()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getConstructor(java.lang.Class[])</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getConstructors()</td>
+										<td>java.lang.reflect.Constructor[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotation(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotations()</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotationsByType(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredClasses()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredConstructor(java.lang.Class[])</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredConstructors()</td>
+										<td>java.lang.reflect.Constructor[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredField(java.lang.String)</td>
+										<td>java.lang.reflect.Field</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredFields()</td>
+										<td>java.lang.reflect.Field[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredMethod(java.lang.String, java.lang.Class[])</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredMethods()</td>
+										<td>java.lang.reflect.Method[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaringClass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingClass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingConstructor()</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingMethod()</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnumConstants()</td>
+										<td>java.lang.Object[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getField(java.lang.String)</td>
+										<td>java.lang.reflect.Field</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getFields()</td>
+										<td>java.lang.reflect.Field[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getGenericInterfaces()</td>
+										<td>java.lang.reflect.Type[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getGenericSuperclass()</td>
+										<td>java.lang.reflect.Type</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getInterfaces()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getMethod(java.lang.String, java.lang.Class[])</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getMethods()</td>
+										<td>java.lang.reflect.Method[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getModifiers()</td>
+										<td>int</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getPackage()</td>
+										<td>java.lang.Package</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getProtectionDomain()</td>
+										<td>java.security.ProtectionDomain</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getResource(java.lang.String)</td>
+										<td>java.net.URL</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getResourceAsStream(java.lang.String)</td>
+										<td>java.io.InputStream</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSigners()</td>
+										<td>java.lang.Object[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSimpleName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSuperclass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getTypeName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getTypeParameters()</td>
+										<td>java.lang.reflect.TypeVariable[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnnotation()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnnotationPresent(java.lang.Class)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnonymousClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isArray()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAssignableFrom(java.lang.Class)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isEnum()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isInstance(java.lang.Object)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isInterface()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isLocalClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isMemberClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isPrimitive()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isSynthetic()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">newInstance()</td>
+										<td>java.lang.Object</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">toGenericString()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">toString()</td>
+										<td>java.lang.String</td>
+									</tr>
+								</table></td></tr> 
+				</table>
+				
+					</td>
+					</tr>
+					
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Detail</td>
+					<td>
+					An exception occurred while invoking an event handler method from Application.cfc. The method name is: onRequest. 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Message</td>
+					<td>
+					Event handler exception. 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RootCause</td>
+					<td>
+					
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Detail</td>
+					<td>
+					[empty string] 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ErrNumber</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Message</td>
+					<td>
+					Element G-RECAPTCHA-RESPONSE is undefined in a Java object of type class coldfusion.filter.FormScope. 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Resolvedname</td>
+					<td>
+					[empty string] 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">StackTrace</td>
+					<td>
+					coldfusion.runtime.UndefinedElementException: Element G-RECAPTCHA-RESPONSE is undefined in a Java object of type class coldfusion.filter.FormScope.
+	at coldfusion.runtime.CfJspPage.ArrayGetAt(CfJspPage.java:972)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:983)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:978)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:745)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:731)
+	at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17)
+	at coldfusion.runtime.CfJspPage.invoke(CfJspPage.java:246)
+	at coldfusion.tagext.lang.IncludeTag.handlePageInvoke(IncludeTag.java:736)
+	at coldfusion.tagext.lang.IncludeTag.doStartTag(IncludeTag.java:572)
+	at coldfusion.runtime.CfJspPage._emptyTcfTag(CfJspPage.java:2986)
+	at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:487)
+	at coldfusion.runtime.UDFMethod$ReturnTypeFilter.invoke(UDFMethod.java:420)
+	at coldfusion.runtime.UDFMethod$ArgumentCollectionFilter.invoke(UDFMethod.java:383)
+	at coldfusion.filter.FunctionAccessFilter.invoke(FunctionAccessFilter.java:95)
+	at coldfusion.runtime.UDFMethod.runFilterChain(UDFMethod.java:334)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:231)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:643)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:432)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:402)
+	at coldfusion.runtime.AppEventInvoker.invoke(AppEventInvoker.java:108)
+	at coldfusion.runtime.AppEventInvoker.onRequest(AppEventInvoker.java:301)
+	at coldfusion.filter.ApplicationFilter.invoke(ApplicationFilter.java:462)
+	at coldfusion.filter.RequestMonitorFilter.invoke(RequestMonitorFilter.java:42)
+	at coldfusion.filter.MonitoringFilter.invoke(MonitoringFilter.java:40)
+	at coldfusion.filter.PathFilter.invoke(PathFilter.java:142)
+	at coldfusion.filter.ExceptionFilter.invoke(ExceptionFilter.java:94)
+	at coldfusion.filter.ClientScopePersistenceFilter.invoke(ClientScopePersistenceFilter.java:28)
+	at coldfusion.filter.BrowserFilter.invoke(BrowserFilter.java:38)
+	at coldfusion.filter.NoCacheFilter.invoke(NoCacheFilter.java:58)
+	at coldfusion.filter.GlobalsFilter.invoke(GlobalsFilter.java:38)
+	at coldfusion.filter.DatasourceFilter.invoke(DatasourceFilter.java:22)
+	at coldfusion.filter.CachingFilter.invoke(CachingFilter.java:62)
+	at coldfusion.CfmServlet.service(CfmServlet.java:219)
+	at coldfusion.bootstrap.BootstrapServlet.service(BootstrapServlet.java:89)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at coldfusion.monitor.event.MonitoringServletFilter.doFilter(MonitoringServletFilter.java:42)
+	at coldfusion.bootstrap.BootstrapFilter.doFilter(BootstrapFilter.java:46)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:422)
+	at org.apache.coyote.ajp.AjpProcessor.process(AjpProcessor.java:199)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:607)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:314)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Suppressed</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array [empty]
+				</th></tr>
+				
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TagContext</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array
+				</th></tr>
+				
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">1</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					?? 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					17 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">2</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					CFINCLUDE 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					29 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Type</td>
+					<td>
+					Expression 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">element</td>
+					<td>
+					G-RECAPTCHA-RESPONSE 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">objectType</td>
+					<td>
+					
+				<table class="cfdump_object">
+				<tr><th class="object" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse"> object of java.lang.Class<br>
+				
+				</th></tr>
+				
+						<tr>
+							<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Class Name</td>
+							<td>java.lang.Class</td>
+						</tr>
+					
+							<tr>
+								<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Methods</td>
+								<td>
+								<table class="cfdump_object">
+									<tr><th class="object"  onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">Method
+
+										</th>
+										<th class="object"  onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">Return Type
+										</th>
+									</tr>
+						
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">asSubclass(java.lang.Class)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">cast(java.lang.Object)</td>
+										<td>java.lang.Object</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">desiredAssertionStatus()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">forName(java.lang.String)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">forName(java.lang.String, boolean, java.lang.ClassLoader)</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotatedInterfaces()</td>
+										<td>java.lang.reflect.AnnotatedType[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotatedSuperclass()</td>
+										<td>java.lang.reflect.AnnotatedType</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotation(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotations()</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getAnnotationsByType(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getCanonicalName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getClassLoader()</td>
+										<td>java.lang.ClassLoader</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getClasses()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getComponentType()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getConstructor(java.lang.Class[])</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getConstructors()</td>
+										<td>java.lang.reflect.Constructor[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotation(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotations()</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredAnnotationsByType(java.lang.Class)</td>
+										<td>java.lang.annotation.Annotation[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredClasses()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredConstructor(java.lang.Class[])</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredConstructors()</td>
+										<td>java.lang.reflect.Constructor[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredField(java.lang.String)</td>
+										<td>java.lang.reflect.Field</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredFields()</td>
+										<td>java.lang.reflect.Field[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredMethod(java.lang.String, java.lang.Class[])</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaredMethods()</td>
+										<td>java.lang.reflect.Method[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getDeclaringClass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingClass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingConstructor()</td>
+										<td>java.lang.reflect.Constructor</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnclosingMethod()</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getEnumConstants()</td>
+										<td>java.lang.Object[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getField(java.lang.String)</td>
+										<td>java.lang.reflect.Field</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getFields()</td>
+										<td>java.lang.reflect.Field[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getGenericInterfaces()</td>
+										<td>java.lang.reflect.Type[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getGenericSuperclass()</td>
+										<td>java.lang.reflect.Type</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getInterfaces()</td>
+										<td>java.lang.Class[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getMethod(java.lang.String, java.lang.Class[])</td>
+										<td>java.lang.reflect.Method</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getMethods()</td>
+										<td>java.lang.reflect.Method[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getModifiers()</td>
+										<td>int</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getPackage()</td>
+										<td>java.lang.Package</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getProtectionDomain()</td>
+										<td>java.security.ProtectionDomain</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getResource(java.lang.String)</td>
+										<td>java.net.URL</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getResourceAsStream(java.lang.String)</td>
+										<td>java.io.InputStream</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSigners()</td>
+										<td>java.lang.Object[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSimpleName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getSuperclass()</td>
+										<td>java.lang.Class</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getTypeName()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">getTypeParameters()</td>
+										<td>java.lang.reflect.TypeVariable[]</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnnotation()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnnotationPresent(java.lang.Class)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAnonymousClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isArray()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isAssignableFrom(java.lang.Class)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isEnum()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isInstance(java.lang.Object)</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isInterface()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isLocalClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isMemberClass()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isPrimitive()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">isSynthetic()</td>
+										<td>boolean</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">newInstance()</td>
+										<td>java.lang.Object</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">toGenericString()</td>
+										<td>java.lang.String</td>
+									</tr>
+								
+									<tr>
+										<td class="object" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">toString()</td>
+										<td>java.lang.String</td>
+									</tr>
+								</table></td></tr> 
+				</table>
+				
+					</td>
+					</tr>
+					
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">StackTrace</td>
+					<td>
+					coldfusion.runtime.EventHandlerException: Event handler exception.
+	at coldfusion.runtime.AppEventInvoker.onRequest(AppEventInvoker.java:309)
+	at coldfusion.filter.ApplicationFilter.invoke(ApplicationFilter.java:462)
+	at coldfusion.filter.RequestMonitorFilter.invoke(RequestMonitorFilter.java:42)
+	at coldfusion.filter.MonitoringFilter.invoke(MonitoringFilter.java:40)
+	at coldfusion.filter.PathFilter.invoke(PathFilter.java:142)
+	at coldfusion.filter.ExceptionFilter.invoke(ExceptionFilter.java:94)
+	at coldfusion.filter.ClientScopePersistenceFilter.invoke(ClientScopePersistenceFilter.java:28)
+	at coldfusion.filter.BrowserFilter.invoke(BrowserFilter.java:38)
+	at coldfusion.filter.NoCacheFilter.invoke(NoCacheFilter.java:58)
+	at coldfusion.filter.GlobalsFilter.invoke(GlobalsFilter.java:38)
+	at coldfusion.filter.DatasourceFilter.invoke(DatasourceFilter.java:22)
+	at coldfusion.filter.CachingFilter.invoke(CachingFilter.java:62)
+	at coldfusion.CfmServlet.service(CfmServlet.java:219)
+	at coldfusion.bootstrap.BootstrapServlet.service(BootstrapServlet.java:89)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at coldfusion.monitor.event.MonitoringServletFilter.doFilter(MonitoringServletFilter.java:42)
+	at coldfusion.bootstrap.BootstrapFilter.doFilter(BootstrapFilter.java:46)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:422)
+	at org.apache.coyote.ajp.AjpProcessor.process(AjpProcessor.java:199)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:607)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:314)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: coldfusion.runtime.UndefinedElementException: Element G-RECAPTCHA-RESPONSE is undefined in a Java object of type class coldfusion.filter.FormScope.
+	at coldfusion.runtime.CfJspPage.ArrayGetAt(CfJspPage.java:972)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:983)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:978)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:745)
+	at coldfusion.runtime.CfJspPage._arrayGetAt(CfJspPage.java:731)
+	at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17)
+	at coldfusion.runtime.CfJspPage.invoke(CfJspPage.java:246)
+	at coldfusion.tagext.lang.IncludeTag.handlePageInvoke(IncludeTag.java:736)
+	at coldfusion.tagext.lang.IncludeTag.doStartTag(IncludeTag.java:572)
+	at coldfusion.runtime.CfJspPage._emptyTcfTag(CfJspPage.java:2986)
+	at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:487)
+	at coldfusion.runtime.UDFMethod$ReturnTypeFilter.invoke(UDFMethod.java:420)
+	at coldfusion.runtime.UDFMethod$ArgumentCollectionFilter.invoke(UDFMethod.java:383)
+	at coldfusion.filter.FunctionAccessFilter.invoke(FunctionAccessFilter.java:95)
+	at coldfusion.runtime.UDFMethod.runFilterChain(UDFMethod.java:334)
+	at coldfusion.runtime.UDFMethod.invoke(UDFMethod.java:231)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:643)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:432)
+	at coldfusion.runtime.TemplateProxy.invoke(TemplateProxy.java:402)
+	at coldfusion.runtime.AppEventInvoker.invoke(AppEventInvoker.java:108)
+	at coldfusion.runtime.AppEventInvoker.onRequest(AppEventInvoker.java:301)
+	... 33 more 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Suppressed</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array [empty]
+				</th></tr>
+				
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TagContext</td>
+					<td>
+					
+				<table class="cfdump_array">
+				<tr><th class="array" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">array
+				</th></tr>
+				
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">1</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					?? 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					17 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cftestCaptcha22ecfm576162433.runPage(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm:17) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\testCaptcha2.cfm 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+					<tr><td class="array" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">2</td>
+					<td> 
+			<table class="cfdump_struct">
+			<tr><th class="struct" colspan="2" onClick="cfdump_toggleTable(this);" style="cursor:pointer;" title="click to collapse">struct</th></tr> 
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">COLUMN</td>
+					<td>
+					0 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">ID</td>
+					<td>
+					CFINCLUDE 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">LINE</td>
+					<td>
+					29 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">RAW_TRACE</td>
+					<td>
+					at cfapplication2ecfc534280214$funcONREQUEST.runFunction(C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc:29) 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TEMPLATE</td>
+					<td>
+					C:\inetpub\wwwroot\rollcalltasteofamerica_staging\application.cfc 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">TYPE</td>
+					<td>
+					CFML 
+					</td>
+					</tr>
+					
+			</table>
+		</td></tr> 
+			</table>
+		
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">Type</td>
+					<td>
+					Expression 
+					</td>
+					</tr>
+					
+					<tr>
+					<td class="struct" onClick="cfdump_toggleRow(this);" style="cursor:pointer;" title="click to collapse">name</td>
+					<td>
+					onRequest 
+					</td>
+					</tr>
+					
+			</table>
+		
+   <hr />
+  

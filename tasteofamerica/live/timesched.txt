@@ -1,0 +1,19 @@
+<!---Early Voting (64) - Added 4/23/14--->
+  <cfset roundZeroStart = createdatetime(2014,5,7,9,0,0) />
+  <cfset request.roundZeroEnd = createdatetime(2014,5,9,17,0,0) /> <!---put in request scope for use on brackets page--->
+
+  <!---Round 1 (64) CreateDateTime(year, month, day, hour, minute, second) --->
+  <cfset roundOneStart = createdatetime(2014,5,12,9,0,0) />
+  <cfset request.roundOneEnd = createdatetime(2014,5,23,17,0,0) /> <!---put in request scope for use on brackets page--->
+    
+  <!---Round 2 (32)--->    
+  <cfset roundTwoStart = createdatetime(2014,5,26,9,0,0) />
+  <cfset request.roundTwoEnd = createdatetime(2014,5,30,17,0,0) /> <!---put in request scope for use on brackets page--->
+  
+  <!---Round 3 (16)--->  
+  <cfset roundThreeStart = createdatetime(2014,6,2,9,0,0) />
+  <cfset request.roundThreeEnd = createdatetime(2014,6,6,12,0,0) /> <!---put in request scope for use on brackets page--->
+    
+  <!---Round 4 - Final Round (8)--->    
+  <cfset roundFourStart = createdatetime(2014,6,9,9,0,0) />
+  <cfset gameEndDate = createdatetime(2014,6,20,17,0,0) /> <!---put in request scope for use on brackets page--->

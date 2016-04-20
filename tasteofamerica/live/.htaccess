@@ -1,0 +1,17 @@
+# Helicon ISAPI_Rewrite configuration file
+# Version 3.1.0.63
+
+RewriteEngine on
+RewriteBase /
+RepeatLimit 200
+
+# redirect alternate hostnames to the canonical hostname
+
+RewriteCond %{HTTP_HOST} ^rollcalltasteofamerica.com$ [NC]
+RewriteRule (.*) http://www.rollcalltasteofamerica.com [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^cqrollcalltasteofamerica.com$ [NC]
+RewriteRule (.*) http://www.rollcalltasteofamerica.com [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^www\.cqrollcalltasteofamerica.com$ [NC]
+RewriteRule (.*) http://www.rollcalltasteofamerica.com [R=301,L]
