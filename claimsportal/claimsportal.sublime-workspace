@@ -1,0 +1,634 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"country",
+				"countryClose"
+			],
+			[
+				"column",
+				"columns"
+			],
+			[
+				"FontS",
+				"FontSiteSansRoman"
+			],
+			[
+				"I",
+				"Italic"
+			],
+			[
+				"F",
+				"Foundation"
+			],
+			[
+				"has",
+				"hasClass"
+			],
+			[
+				"na",
+				"navFind"
+			],
+			[
+				"pag",
+				"pageNavigation"
+			],
+			[
+				"ma",
+				"max-height"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"hist",
+				"historyTitle"
+			],
+			[
+				"comments",
+				"commentsDisplay"
+			],
+			[
+				"text-",
+				"text-transform"
+			],
+			[
+				"fon",
+				"font-style"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"cont",
+				"contactLink"
+			],
+			[
+				"contact",
+				"contactForm"
+			],
+			[
+				"fa",
+				"fadeOut"
+			],
+			[
+				"r",
+				"rgba()"
+			],
+			[
+				"paddin",
+				"padding-left"
+			],
+			[
+				"pa",
+				"pageNavigation"
+			],
+			[
+				"text",
+				"textarea"
+			],
+			[
+				"js",
+				"jsNavOpen"
+			],
+			[
+				"nav",
+				"navFind"
+			],
+			[
+				"block",
+				"blockquote"
+			],
+			[
+				"padding",
+				"padding-right"
+			],
+			[
+				"tx",
+				"text-transform"
+			],
+			[
+				"entry",
+				"entryFooter"
+			],
+			[
+				"font",
+				"font-family"
+			],
+			[
+				"inlin",
+				"inline"
+			],
+			[
+				"ccc",
+				"c0c0c0"
+			],
+			[
+				"bl",
+				"blkForm"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "app/js/utility.js",
+			"settings":
+			{
+				"buffer_size": 9406,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/select-traveller.html",
+			"settings":
+			{
+				"buffer_size": 8668,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/modal-exit.html",
+			"settings":
+			{
+				"buffer_size": 342,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/css/main.css",
+			"settings":
+			{
+				"buffer_size": 59546,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-3/css/main.css",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-3/js/home.js",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-1/index.html",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-2/index.html",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-3/css/mobile.css",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-3/js/utility.js",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-3/index.html",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-2/css/main.css",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-2/css/mobile.css",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-2/js/utility.js",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-2/js/home.js",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-1/radio-buttons-country.html",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-1/quote.html",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-2/base.html",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-1/js/home.js",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/demo-1/css/main.css",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/base/index.html",
+		"/C/Users/ivanw/Documents/Clients/CoverMore/country/index.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/style.css",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/sidebar.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/functions.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/category.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/archive.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/contact.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/search.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/searchform.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/single.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/tag.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/index.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/header.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/page.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/js/main.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/js/utility.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/js/touch.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/footer.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/library/modernizr-2.6.2.min.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/css/main.css",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/js/utility.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/homepage.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/archives/user-styles/main.css",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/js/contact.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/library/zepto.history.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/library/zepto.touch.min.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/library/zepto.history.min.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/resources/index.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/resources/js/main.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/resources/js/utility.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/resources/js/contact.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/resources/js/main_full.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/resources/js/touch.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/blog.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/loading-contact.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/comments.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/404.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/loop.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/pagination.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/favicon.ico",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/js/contact.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/contact.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/library/modernizr-2.6.2.min.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/sidebar-blocks.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/blog-pagination.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/navigation.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/interior.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/README.md",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/contact_demo.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/author.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/screenshot.png",
+		"/C/Users/ivanw/Documents/Clients/Charles/galapagos/template-demo.php",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/css/print.css",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/archives/socialmedia.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/archives/portfolio_main.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/archives/portfolio.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/archives/interior.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/archives/homepage.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/archives/contact.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/archives/blog.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/archives/user-styles/print.css",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/js/touch.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/touch_demo.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/library/zepto-1.0.min.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/charles.sublime-workspace",
+		"/C/Users/ivanw/Documents/Clients/Charles/plymouth/archives/user-javascript/utility.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/charles.sublime-project",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/blog.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/contact.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/interior.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/homepage.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/css/main.css",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/index.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/js/utility.js",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/css/print.css",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/portfolio_main.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/socialmedia.html",
+		"/C/Users/ivanw/Documents/Clients/Charles/app/portfolio.html"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"closeFancyBoxBtn",
+			"60",
+			"</li>",
+			"<li id=\"",
+			"name=\"country\"",
+			"div class=\"group-label",
+			"div class=\"group\"",
+			"url(/",
+			"url(..",
+			"</option>",
+			"<option value=\"",
+			"<option value=",
+			"select",
+			" id=\"destinationCountryID\"",
+			" name=\"destinationCountryID\"",
+			".\n",
+			".ver",
+			"bottomComment",
+			"rgba",
+			"stan",
+			"jsNavOpen",
+			"comments_popup_link",
+			"pageNavigation",
+			"html5wp_pagination()",
+			"url(../images",
+			"wp_head",
+			"wp_footer()",
+			"wp_footer",
+			"wp_head",
+			", initial-scale=1.0",
+			"class=\"siteFooter\"",
+			"class=\"siteHeader\"",
+			".siteHeader",
+			".siteFooter",
+			" class=\"content\"",
+			"lnkNavigation",
+			".jsClosed",
+			"<div class=\"navSite jsClosed\">",
+			"class=\"navSite\"",
+			"navSearch",
+			"class=\"navSearch\"",
+			"id=\"contextual\"",
+			"<li><a href=\"#contextual\">Subnavigation</a></li>",
+			"Bold', Helvetica, Arial, sans-serif;",
+			"Regular', Helvetica, Arial, sans-serif",
+			"Demi', Helvetica, Arial, sans-serif",
+			"<a href=\"#contextual\">Archives</a>",
+			"}*/\n",
+			"blkContextual",
+			"primaryNavigation",
+			".primaryNavigation ul a { text-decoration: none; display: inline; height: 22px; margin: 0; padding: 0; background: transparent none !important; -webkit-transition: all 0; -moz-transition: all 0; -o-transition: all 0; transition: all 0; font-family: Helvetica, Arial, sans-serif; }\n.primaryNavigation ul a:hover, .primaryNavigation ul a:focus { text-decoration: underline !important; }*/",
+			"<script src=\"js/utility.js\"></script>",
+			"<script src=\"library/zepto-1.0.min.js\"></script>",
+			"jquery-1.4.4.min.js",
+			"modernizr-1.5.min.js",
+			"user-javascript/utility.js",
+			"<!--Primary Navigation-->",
+			"<a href=\"#\">About</a>",
+			"<a href=\"#\">Contact</a>",
+			"<li><a href=\"#\">Contact</a></li>",
+			"				<li><a href=\"#socialMedia\">Social Media</a></li>\n				<li><a href=\"#blogLinks\">Blog Links</a></li>",
+			"				<li><a href=\"#\">Portfolio</a>\n					<ul>\n						<li><a href=\"#\">Mondial Assistance (B2C)</a></li>\n						<li><a href=\"#\">Congressional Quarterly</a></li>\n						<li><a href=\"#\">CQPolitics.com</a></li>\n						<li><a href=\"#\">CDHNF</a></li>\n						<li><a href=\"#\">GettingHired</a></li>\n						<li><a href=\"#\">Merkle</a></li>\n						<li><a href=\"#\">The Wilson Project</a></li>\n						<li><a href=\"#\">Exploring Maryland's Roots (MPT)</a></li>\n						<li><a href=\"#\">House of Derstern</a></li>\n						<li><a href=\"#\">Project OSLIS</a></li>\n					</ul>\n				</li>",
+			"        <!--Site Header-->\n        <header>\n    			<div class=\"siteHeader\">		\n					<h1>The Wilson Project</h1>\n					<h2>Blog of UI/Front-End Developer Ivan Wilson</h2>\n    				<a href=\"#\"><img src=\"images/logos/logo-twp.png\" alt=\"The Wilson Project [Logo]\" /></a>\n    			</div>\n        </header>\n        <!--Site Header-->",
+			"    			<div class=\"siteHeader\">		\n    				<hgroup>\n    					<h1>The Wilson Project</h1>\n    					<h2>Blog/Portfolio Site of UI/Front-End Developer Ivan Wilson</h2>\n    				</hgroup>\n    				<a href=\"#\"><img src=\"images/logos/logo-twp.png\" alt=\"The Wilson Project [Logo]\" /></a>\n    			</div>",
+			"    				<hgroup>\n    					<h1>The Wilson Project</h1>\n    					<h2>Blog/Portfolio Site of UI/Front-End Developer Ivan Wilson</h2>\n    				</hgroup>",
+			"pageNavigation clearfix",
+			"#cccccc",
+			"#ffffff",
+			"border: none;",
+			"#000000",
+			"#999999",
+			"line-height: normal;",
+			"'FunctionProMediumRegular'",
+			"'FunctionProBookBold'",
+			"'FunctionProMediumBold'"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"</label></li>",
+			"<li><label for=\"country-",
+			"name=\"destinationCountryID\"",
+			"legend class=\"group-label",
+			"fieldset class=\"group\"",
+			"url(",
+			"</label></li>",
+			"<li><label for=\"country-",
+			"<li><label for=",
+			"ul",
+			"",
+			"page-numbers",
+			"url(images",
+			"",
+			"class=\"blkFooter\"",
+			"class=\"blkHeader\"",
+			".blkHeader",
+			".blkFooter",
+			" class=\"content\" id=\"content\"",
+			"btnNavigation",
+			".jsNavClosed\n<div class=\"navSite\">",
+			"\n<div class=\"navSite\">",
+			"\nclass=\"navSite jsClosed\"",
+			"navFind",
+			"id=\"find\"",
+			"<li><a href=\"#find\">Find</a></li>",
+			"Bold';",
+			"Regular'",
+			"Demi'",
+			"<a href=\"#contextual\">Subnavigation</a>",
+			"navSearch",
+			"navPrimary",
+			"<!--<script src=\"js/utility.js\"></script>-->",
+			"<!--<script src=\"library/zepto-1.0.min.js\"></script>-->",
+			"zepto-1.0.min.js",
+			"modernizr-2.6.2.min.js",
+			"js/utility.js",
+			"<!--Site Navigation-->",
+			"<a href=\"interior.html\">About</a>",
+			"<a href=\"contact.html\">Contact</a>",
+			"",
+			"				<li><a href=\"#archives\">Archives</a></li>",
+			"<li><a href=\"#archives\">Archives</a></li>",
+			"        <!--Site Header-->\n        <header>\n			<div class=\"siteHeader\">		\n				<h1>The Wilson Project</h1>\n				<h2>Blog of UI/Front-End Developer Ivan Wilson</h2>\n				<a href=\"#\"><img src=\"images/logos/logo-twp.png\" alt=\"The Wilson Project [Logo]\" /></a>\n			</div>\n        </header>\n        <!--Site Header-->",
+			"    			<div class=\"siteHeader\">		\n					<h1>The Wilson Project</h1>\n					<h2>Blog of UI/Front-End Developer Ivan Wilson</h2>\n    				<a href=\"#\"><img src=\"images/logos/logo-twp.png\" alt=\"The Wilson Project [Logo]\" /></a>\n    			</div>",
+			"        	<!--Social Media/Last Ten Days-->\n        	<section>\n				<div id=\"socialMedia\" class=\"socialMediaArea\">\n            	\n					<h2>Social Media</h2>\n				\n					<ul class=\"socialMediaSites\"> \n						<li><a href=\"http://twitter.com/iwilsonjr/\" title=\"Twitter\" class=\"smLinkTwitter\">Twitter</a></li> \n						<li><a href=\"http://www.flickr.com/photos/thewilsonproject/\" title=\"Flickr\" class=\"smLinkFlickr\">Flickr</a></li> \n						<li><a href=\"http://www.delicious.com/ivanwilson/\" title=\"Delicious\" class=\"smLinkDelicious\">Delicious</a></li>  \n						<li><a href=\"http://www.last.fm/user/iwilson1/\" title=\"Last.fm\" class=\"smLinkLastfm\">Last.fm</a></li>\n						<li><a href=\"http://www.vimeo.com/ivanwilson\" title=\"Vimeo\" class=\"smLinkVimeo\">Vimeo</a></li> \n						<li><a href=\"http://www.linkedin.com/in/thewilsonproject/\" title=\"LinkedIn\" class=\"smLinkLinkedIn\">LinkedIn</a></li>\n						<li><a href=\"http://www.thewilsonproject.com/feed/\" title=\"RSS Feed\" class=\"smLinkRSS\">RSS Feed</a></li>\n					</ul>\n					\n					<div class=\"smDayList\">\n					\n						<h3>Last Ten Days</h3>\n						\n						<ul class=\"daySelector\">\n							<li><span><time datetime=\"2010-06-05\">05.06.2010</time></span></li>\n							<li><a href=\"/socialmedia/2010/06/04/\" class=\"dayChoice\"><time datetime=\"2010-06-04\">04.06.2010</time></a></li>\n							<li><span><time datetime=\"2010-06-03\">03.06.2010</time></span></li>\n							<li><span><time datetime=\"2010-06-02\">02.06.2010</time></span></li>\n							<li><a href=\"/socialmedia/2010/06/01/\" class=\"dayChoice\"><time datetime=\"2010-06-01\">01.06.2010</time></a></li>\n							<li><span><time datetime=\"2010-05-31\">31.05.2010</time></span></li>\n							<li><span><time datetime=\"2010-05-30\">30.05.2010</time></span></li>\n							<li><span><time datetime=\"2010-05-29\">29.05.2010</time></span></li>\n							<li><a href=\"/socialmedia/2010/05/28/\" class=\"dayChoice\"><time datetime=\"2010-05-28\">28.05.2010</time></a></li>\n							<li><span><time datetime=\"2010-05-27\">27.05.2010</time></span></li>\n						</ul>\n										\n					</div>\n	\n            	</div>\n            </section>        \n        	<!--Social Media/Last Ten Days-->",
+			"pageNavigation",
+			"#ccc",
+			"#fff",
+			"border: 0;",
+			"#000",
+			"#999",
+			"line-height: 1.2;",
+			"'Function Pro Regular'",
+			"'Function Pro Bold'",
+			"'Function Pro Demi'"
+		],
+		"reverse": false,
+		"show_context": false,
+		"use_buffer2": false,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "app/js/utility.js",
+					"settings":
+					{
+						"buffer_size": 9406,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2850,
+								2850
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2280.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/select-traveller.html",
+					"settings":
+					{
+						"buffer_size": 8668,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								79,
+								79
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1558.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/modal-exit.html",
+					"settings":
+					{
+						"buffer_size": 342,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								303,
+								287
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/css/main.css",
+					"settings":
+					{
+						"buffer_size": 59546,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								52653,
+								52547
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 15335.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 114.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 184.0,
+	"status_bar_visible": true
+}

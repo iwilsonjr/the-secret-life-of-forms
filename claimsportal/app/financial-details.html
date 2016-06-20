@@ -1,0 +1,249 @@
+<!doctype html>
+<!--[if IE 8 ]> <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]> <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html> <!--<![endif]-->
+<head>
+  <title>Cover More Claims Portal - Financial Details</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link type="text/css" rel="stylesheet" href="css/jquery.fancybox.css" /> 
+  <link type="text/css" rel="stylesheet" href="css/jquery.qtip.min.css" />
+  <link type="text/css" rel="stylesheet" href="css/main.css" />
+  <link type="text/css" rel="stylesheet" href="css/mobile.css" />
+</head>
+
+<body>
+
+ <!--Header-->
+  <header>
+      <div class="siteHeader"> 
+      
+          <a href="#" class="siteLogo"><img src="files/images/logos/logo-cover-more.png" width="210" height="47" alt="Cover-More Travel Insurance" /></a>
+          <!--Site Logo-->
+          <span>Questions? <a href="#">Visit our FAQ Page</a></span>
+          
+      </div>
+  </header>
+  <!--Header-->
+
+  <!--Container-->
+  <div class="outerContainer">
+  
+    <!--Inner Container-->
+    <div class="container_16 alpha omega">
+    
+      <!--Article-->    
+    <article>
+      <div class="article grid_10 alpha">
+      
+      <strong class="tab">Online Claims Centre</strong> 
+      <h1><img src="files/images/icons/icon-financial.png" width="35" height="33" alt="financial" /> Financial Details</h1>
+
+		<form action="#">
+
+        	<div class="infoForm">
+            
+	        	<p class="intro">Any funds payable as part of your settlement will be deposited into your nominated account. Please provide details below:</p>            
+            
+                <ol>
+                    <li class="inline">
+                        <label for="bankName">Bank Account Holder Name</label> 
+                        <input type="text" name="bankName" id="bankName" value="" size="25" />
+                    </li>
+                    <li class="inline">
+                        <label for="bsb">BSB <a href="#help-1" class="help">Help?</a></label> 
+                        
+                        <!--Help Window-->     
+                        <div class="helpWindow" id="help-1">
+                            <a href="#" class="closeWindow">Close Window</a>              
+                            <div class="scrollableArea">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </div>
+                        </div>
+                        <!--Help Window--> 
+                                                  
+                        <input type="text" name="bsb" id="bsb" value="" size="15" />
+                    </li>
+                    <li class="inline">
+                        <label for="account">Account Number</label> 
+                        <input type="text" name="account" id="account" value="" size="25" />
+                    </li>                    
+                    <li>
+                        <fieldset class="inputList">
+                            <legend>Did you purchase your travel arrangement on credit card?</legend>
+                            <ul>
+                                <li><input type="radio" name="credit" id="credit-0" value="yes" /> <label for="credit-0">Yes</label></li>
+                                <li><input type="radio" name="credit" id="credit-1" value="no" /> <label for="credit-1">No</label></li>         
+                            </ul>
+                            
+                            <div class="credit hide">
+                                <p class="disclaimer">Certain credit cards may provide limited travel insurance cover. If you have paid for your travel arrangements by credit card you may have activated separate insurance cover.</p>
+    
+    <p class="disclaimer">Providing this information will not slow your claim with us: your claim will be finalised before any recovery attempts are made. By doing this we can make sure that insurance premiums stay as low as possible.</p>
+							</div>
+                        </fieldset>                      
+                    </li>                                                         
+                </ol>
+
+              <div class="moreInfo uploadArea credit hide">
+	
+                <h2 class="uploadTab">Upload Required Documents</h2>
+              	<ol>
+                    <li class="inline">
+                        <label for="card">Card Provider</label> 
+                        <input type="text" name="card" id="card" value="" size="55" />
+                    </li>
+                	<li class="inline">
+                    	<label for="cardType">Card Type</label>
+                        <select name="cardType" id="cardType">
+                            <option value="0">Value #1</option>
+                            <option value="1">Value #2</option>
+                            <option value="2">Value #3</option>                                        
+                        </select>
+                    </li>                
+                </ol>
+
+                  <div class="uploadBlock">
+                      <div class="col-1">
+                          <p>The front page of your credit card statement which shows the card holders name as well as the last 8 digits of your credit card number</p>
+                          <ul>
+                              <li>No document uploaded</li>
+                          </ul>
+                          <label for="upload-0" class="btn">Browse &amp; Upload</label>
+                          <input type="file" name="upload-0" id="upload-0" />
+                      </div>
+                      <div class="col-2">
+                          <ul>
+                              <li><input type="radio" name="document1" id="document1-0" value="yes" /> <label for="document1-0">I do not have and cannot acquire this document</label></li>
+                              <li class="hide" id="description1-0">
+                                  <label for="uploadDetails-0-0" class="hide">Please explain the reason why you cannot provide this documentation:</label>
+                                  <textarea name="uploadDetails-0-0" id="uploadDetails-0-0" cols="20" rows="3"></textarea>
+                              </li>                              
+                              <li><input type="radio" name="document1" id="document1-1" value="no" /> <label for="document1-1">I do not have this document but will be providing it later</label>
+                              <li class="hide" id="description1-1">
+                                  <label for="uploadDetails-0-1" class="hide">Please explain the reason why you cannot provide this documentation:</label>
+                                  <textarea name="uploadDetails-0-1" id="uploadDetails-0-1" cols="20" rows="3"></textarea>
+                              </li>                                 
+                          </ul>
+                      </div>
+                  </div>
+                  
+                  <div class="uploadBlock">
+                      <div class="col-1">
+                          <p>The page of your credit card statement which shows the purchase of your travel arrangements (any non-relevant transactions may be blanked out)</p>
+                          <ul>
+                              <li>No document uploaded</li>
+                          </ul>
+                          <label for="upload-1" class="btn">Browse &amp; Upload</label>
+                          <input type="file" name="upload-1" id="upload-1" />
+                      </div>
+                      <div class="col-2">
+                          <ul>
+                              <li><input type="radio" name="document2" id="document2-0" value="yes" /> <label for="document2-0">I do not have and cannot acquire this document</label></li>
+                              <li class="hide" id="description2-0">
+                                  <label for="uploadDetails-1-0" class="hide">Please explain the reason why you cannot provide this documentation:</label>
+                                  <textarea name="uploadDetails-1-0" id="uploadDetails-1-0" cols="20" rows="3"></textarea>
+                              </li>                              
+                              <li><input type="radio" name="document2" id="document2-1" value="no" /> <label for="document2-1">I do not have this document but will be providing it later</label>
+                              <li class="hide" id="description2-1">
+                                  <label for="uploadDetails-1-1" class="hide">Please explain the reason why you cannot provide this documentation:</label>
+                                  <textarea name="uploadDetails-1-1" id="uploadDetails-1-1" cols="20" rows="3"></textarea>
+                              </li>                                 
+                          </ul>
+                      </div>
+                  </div>
+                              
+	            </div>
+                
+                <div class="addProvider">
+                	<a href="#">Add Another Card</a>
+                </div>                
+                
+                <div class="buttonWell">
+                    <input type="submit" name="test4" value="Next" />
+                    
+                    <ul>
+                        <li><a href="#">Back</a></li>
+                        <li><a href="modal-exit.html" class="fancybox">Save &amp; Exit</a></li>                    
+                    </ul>
+                </div>               
+            
+            </div>            
+            
+        </form>	
+
+      </div>
+    </article>
+      <!--Article-->
+      
+    <!--Sidebar-->    
+    <aside>
+      <div class="sidebar grid_5 omega">
+        <h4>Summary</h4>
+        <span class="claimLabel">Claim item(s)</span>
+        <ul class="claimItems">
+          <li>Overseas Medical or Dental</li>
+          <li>Trip Cancellation or Amendment</li>
+          <li>Additional Expenses</li>
+        </ul>
+        <span class="travellerLabel">Traveller</span>
+        <ul class="claimItems">
+          <li>Chris Davies</li>
+        </ul>
+        <span class="dateLabel">Date</span>
+        <ul class="claimItems">
+          <li>22/06/2013</li>
+        </ul>
+        
+        <h4>Claims check list</h4>
+       <ul class="checkList">
+          <li class="completed"><a href="#">Select Traveller Involved</a> <img src="files/images/lists/list-checklist-select-traveller.png" alt="list-checklist-select-traveller" width="21" height="25"></li>
+          <li class="completed"><a href="#">Location Information</a> <img src="files/images/lists/list-checklist-location-information.png" alt="list-checklist-location-information" width="17" height="25"></li>
+          <li class="completed"><a href="#">Describe Incident</a> <img src="files/images/lists/list-checklist-describe.png" alt="list-checklist-describe" width="19" height="25"></li>
+          <li class="completed"><a href="#">Provide Expenses</a> <img src="files/images/lists/list-checklist-provide-expenses.png" alt="list-checklist-provide-expenses" width="22" height="25"></li>
+          <li class="completed"><a href="#">Upload Documentation</a> <img src="files/images/lists/list-checklist-upload-documentation.png" alt="list-checklist-upload-documentation" width="20" height="25"></li>
+          <li class="selected">Enter Financial Details <img src="files/images/lists/list-checklist-financial-details.png" alt="list-checklist-financial-details" width="25" height="25"></li>
+          <li>Additional Details <img src="files/images/lists/list-checklist-additional-details.png" alt="list-checklist-additional-details" width="20" height="25"></li>
+          <li>Review and Finalise <img src="files/images/lists/list-checklist-review-finalize.png" alt="list-checklist-review-finalize" width="27" height="25"></li>
+        </ul>
+
+      </div>
+    </aside>
+      <!--Sidebar-->
+
+            
+    </div>
+    <!--Inner Container-->
+
+    <!--Footer-->
+    <footer>
+      <div class="container_16 footer">
+      <div class="footerLinks grid_15"> 
+      	<strong>Need assistance?</strong> 
+        <ul class="usefulLinks">
+          <li>Customer Service: 1300 72 88 22</li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+        <p>Any information provided will be handled in accordance with our <a href="#">privacy policy</a>. © 2013 Cover-More Insurance Services Pty Ltd ABN 95003114145 AFSL 241713. Insurance administered by Cover-More, issued by Great Lakes Reinsurance (UK) PLC ARBN 127 740 532, ABN 18 964 580 576, AFSL No. 318603, trading as Great Lakes Australia. Phone 1300 72 88 22</p>
+      </div>
+    </footer>
+    <!--Footer-->
+
+        
+	</div>
+  	<!--Container-->
+
+     <!--JavaScript Calls-->  
+	<script src="library/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="library/jquery-migrate-1.2.1.min.js" type="text/javascript"></script> 
+    <script src="library/jquery.fancybox.pack.js" type="text/javascript"></script>          
+	<script src="library/jquery.qtip.min.js" type="text/javascript"></script>
+     <!--[if (gte IE 6)&(lte IE 8)]>
+  		<script type="text/javascript" src="library/selectivizr-min.js"></script>
+	<![endif]-->
+    <script src="library/jquery.placeholder.js" type="text/javascript"></script>  
+	<script src="js/utility.js" type="text/javascript"></script>       
+    <!--JavaScript Calls-->
+    
+</body>
+</html>
