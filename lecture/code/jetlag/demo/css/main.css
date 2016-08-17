@@ -195,7 +195,7 @@ box-shadow: 0 8px 8px 0 rgba(185,179,155,0.3); font-size: 14px; font-size: 1.4re
 /* Pagination */	
 .pagination { overflow: hidden; position: relative; z-index: 1; width: 306px; height: 94px; margin: -150px 0 55px -15px; padding: 7px 7px 0; background: url(../files/images/backgrounds/bkg-pagination.png) no-repeat; background-size: 320px auto; }	
 
-.prev, .next { float: left; display: block; width: 48px; height: 92px; margin: 0; padding: 0; background: url(../files/images/buttons/btn-pagination.png) no-repeat; background-size: 192px auto; cursor: pointer; -webkit-user-select: none; }
+.prev, .next { overflow: hidden; float: left; display: block; width: 48px; height: 92px; margin: 0; padding: 0; background: url(../files/images/buttons/btn-pagination.png) no-repeat; background-size: 192px auto; border: 0; cursor: pointer; -webkit-user-select: none; text-indent: -150px; outline: 0; }
 .next { float: right; background-position: -96px 0; }
 
 	.prev:active { background-position: -48px 0; }
@@ -313,12 +313,12 @@ footer { float: left; width: 316px; height: 46px; padding: 0; background-color: 
 		.menuNavigation li:last-child { border: none; }
 	.menuNavigation li a { display: block; height: 25px; margin: 0; padding: 10px 0; color: #fffdf4; text-decoration: none; text-shadow: 2px 2px 5px #000; text-align: center; }
 		.menuNavigation strong a { display: block; width: 36px; height: 53px; padding: 0; color: #becfda; text-align: center; text-decoration: none; }
-	.menuNavigation span { display: block; position: relative; top: -80px; z-index: 3; width: 100%; height: 105px; margin: 0; padding: 0; background: url(../files/images/backgrounds/bkg-menuheader.jpg) no-repeat 0 0; }
+	.menuNavigation span { display: none; position: relative; top: -80px; z-index: 3; width: 100%; height: 105px; margin: 0; padding: 0; background: url(../files/images/backgrounds/bkg-menuheader.jpg) no-repeat 0 0; }
 	.menuNavigation span img { margin: 0 0 0 20px; }
 	.menuNavigation .menuFooter { position: relative; z-index: 3; clear: both; width: 100%; height: 240px; padding: 30px 15px; background: url(../files/images/backgrounds/bkg-menufooter.jpg) no-repeat 0 0; background-size: 274px 300px;  font-family: 'Nunito Light'; }
 		.menuNavigation .menuFooter .callCoverMore { position: relative; left: 50%; float: left; display: block; width: 149px; height: 46px; margin: 15px 0 10px -75px; }
-	.menuNavigation .menuFooter span { position: relative; top: -1px; float: left; clear: both; display: inline-block; width: auto; height: auto; margin: 0 4px 10px 0px; background: none; font-size: 1.2rem; text-shadow: 1px 3px rgba(0,0,0,0.5); color: #78d5ec; }
-	.menuNavigation .menuFooter img { float: left; }
+	.menuNavigation .menuFooter span { display: none; position: relative; top: -1px; float: left; clear: both; /*display: inline-block;*/ width: auto; height: auto; margin: 0 4px 10px 0px; background: none; font-size: 1.2rem; text-shadow: 1px 3px rgba(0,0,0,0.5); color: #78d5ec; }
+	.menuNavigation .menuFooter img { display: none; float: left; }
 
 /* Open/Close Navigation */
 

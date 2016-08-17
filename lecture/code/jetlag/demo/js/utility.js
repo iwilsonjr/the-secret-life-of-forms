@@ -15,11 +15,6 @@ $(document).ready(function(){
 	}, function(){
 		$("body").removeClass("openNavigation").addClass("closeNavigation");
 	})*/
-	$("#menuLink").click(function(){
-		$("body").toggleClass("openNavigation");
-	/*}, function(){
-		$("body").removeClass("openNavigation").addClass("closeNavigation");*/
-	})
 	/*$("#menuLink").swipeleft(function() {
     	$("body").removeClass("closeNavigation").addClass("openNavigation");
 	});

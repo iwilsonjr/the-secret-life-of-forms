@@ -1,47 +1,58 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-	
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!doctype html>
+<html>
 <head>
-<title>Presentation by CDG Interactive, Inc.</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
-	<style type="text/css">
-		body { margin: 0; padding: 0 0 0 57px; background: url(files/images/CDG_Top_BG.jpg) repeat-x 0 0; font: 11px/18px Verdana, Arial, Helvetica, sans-serif; text-align: justify; }
-		h1, h2, h3 { background: transparent none; color: #000; }
-		h1 { margin: 0; font-weight: normal; font-size: 18px; }
-		h2 { margin: 15px 0 0; font-size: 12px;  }
-		h3 { margin: 15px 0 0 30px; font-size: 11px; }
-		
-		a { background: transparent none; color: #df3a1d; text-decoration: underline; }
-			a:hover, a:focus { color: #f60; }
-		
-		a img { border: 0; }
-		
-		ul { margin: 0; padding: 0 0 0 30px; }
-		ol { margin: 0; padding: 0 0 0 30px; }
-			ul li { margin: 0; list-style-type: none; }
-			
-		.style3 { color: #3cf; }
-		.style4 { color: #09f; }
-		.header { height: 40px; margin: 0 0 25px; padding: 12px 0 0; }
-		.inset { margin: -1px 0 10px 30px; }
-	</style>
-	
+<meta charset="UTF-8">
+
+<!-- iPhone -->
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+
+<!-- iPhone 5 -->
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+<!-- iPhone -->
+<link rel="apple-touch-icon-precomposed" href="files/images/icons/apple-touch-icon-precomposed.png" />
+<link href="files/images/icons/apple-touch-startup-image-320x480.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+
+<!-- iPhone (Retina) -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="files/images/icons/apple-touch-icon-114x114-precomposed.png" />
+<link href="files/images/icons/apple-touch-startup-image-640x960.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<!-- iPhone 5 -->
+<link href="files/images/icons/apple-touch-startup-image-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+<title>Call Codes</title>
+<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.0.min.css" />
+<link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
 
-<body>
-	<div class="header">
-        <img src="files/images/CDG_Logo.jpg" alt="CDG Interactive, Inc." width="125" height="28" />
-	</div>
-	<h1>Presentation to Cover More</h1>
-	<h2>Call Codes</h2>
-	<ul>
-		<li><a href="home.html">Select Phone (Home)</a></li>
-        <li><a href="rotary.html">Rotary</a></li>
-        <li><a href="touch.html">Touch</a></li>
-	</ul>
-    
-   
-    
+<body class="home">
+<div class="container" data-role="page">
+  <header> <a href="home.html"><img src="files/images/logos/logo-call-codes-2x.png" alt="Call Codes" width="268" height="60" /></a> 
+    <!--Menu Navigation-->
+    <nav class="menuNavigation"> <strong><a href="#sitemenu" id="menuLink"></a></strong> <span><a href="#"><img src="files/images/logos/logo-call-codes-2x.png" alt="Call Codes" width="268" height="60" /></a></span>
+      <ul id="sitemenu">
+        <li><a href="index.html">Pick Phone</a></li>
+        <li></li>
+      </ul>
+      <div class="menuFooter"> <span>All of our best travel apps wrapped into one!</span> <img src="files/images/logos/logo-travel-valet-2x.png" alt="Travel Valet" width="240" height="42" /> </div>
+    </nav>
+    <!--Menu Navigation--> 
+  </header>
+  <article>
+  <h1>Select Phone</h1>
+  <a href="rotary.html" class="rotaryImage"><img src="files/images/links/link-rotary.png" width="131" height="131" alt="Rotary" /></a>
+  <a href="touch.html" class="touchImage"><img src="files/images/links/link-touch.png" width="131" height="105" alt="Touch" /></a>
+  <a href="rotary.html" class="rotaryBtn"></a>
+  <a href="touch.html" class="touchBtn"></a>
+  </article>
+</div>
+<footer>  </footer>
+
+<!-- Javascript --> 
+<script type="text/javascript" src="library/jquery-1.8.3.min.js"></script> 
+<script type="text/javascript" src="library/jquery.mobile-1.2.0.min.js"></script>
+<script type="text/javascript" src="js/utility.js"></script> 
+<!-- Javascript -->
 </body>
 </html>
