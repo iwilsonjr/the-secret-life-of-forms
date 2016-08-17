@@ -3,33 +3,29 @@ window.onload = function() {
     setTimeout(function(){window.scrollTo(0, 1);}, 1);
 }
 
-//Add to Home - iPhone/iOS only
-var addToHomeConfig = {
-	message: 'Install this web app on<br />your iPhone: tap %icon and then &lsquo;<strong>Add to Home</strong>&rsquo;<br />Screen.',
-	returningVisitor: false,		// Show the message only to returning visitors (ie: don't show it the first time)
-	//expire: 720,
-	touchIcon: true,
-	bottomOffset: 20
-};
+
 
 
 $(document).ready(function(){
 //Start JQuery Code
 
-	$.mobile.ajaxEnabled = false;
-	
 	/* Site Menu */
-	$("#menuLink").toggle(function(){
+	/*$("#menuLink").toggle(function(){
 		$("body").removeClass("closeNavigation").addClass("openNavigation");
 	}, function(){
 		$("body").removeClass("openNavigation").addClass("closeNavigation");
+	})*/
+	$("#menuLink").click(function(){
+		$("body").toggleClass("openNavigation");
+	/*}, function(){
+		$("body").removeClass("openNavigation").addClass("closeNavigation");*/
 	})
-	$("#menuLink").swipeleft(function() {
+	/*$("#menuLink").swipeleft(function() {
     	$("body").removeClass("closeNavigation").addClass("openNavigation");
 	});
 	$("#menuLink").swiperight(function() {
 		$("body").removeClass("openNavigation").addClass("closeNavigation");
-	});
+	});*/
 
 	//Initialize Forms (Site-wide)
 	var initialLabel = displayLabel();	
@@ -44,7 +40,7 @@ $(document).ready(function(){
 	$("#next, #prev").on("click",function(){
 		
 		//Initialization
-		var choices = $("form input[type='radio']").length - 1;
+		var choices = $("input[type='radio']").length - 1;
 		var button = $(this).attr("id");
 		var form = $("form").attr("id");	
 				
@@ -99,7 +95,7 @@ $(document).ready(function(){
 function radioChecked(){
 	var i = 0;
 	
-	$("form input[type='radio']").each(function(index){
+	$("input[type='radio']").each(function(index){
 		if ($(this).attr("checked")) {
 			i = index;
 		}
@@ -109,7 +105,7 @@ function radioChecked(){
 	  
 //Display label/buttonwell
 function displayLabel(){
-	id = $("form input[type='radio']:checked").attr("id");
+	id = $("input[type='radio']:checked").attr("id");
 	label = $("[for=" + id + "]").text();
 	return label;
 }
@@ -118,7 +114,7 @@ function displayLabel(){
 function displayLabelImg(count, motion){
 	
 	//Initialization
-	var flag = $("form input[type='radio']").length - 1;
+	var flag = $("input[type='radio']").length - 1;
 	var imgStop = -1 * ($(".displayBox img").width() - 580);
 	
 	//Initial Value

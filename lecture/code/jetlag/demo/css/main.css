@@ -120,7 +120,7 @@ button, html input[type="button"], input[type="reset"], input[type="submit"] { -
 input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0; }
 button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
 
-	input[type='submit'] { float: right; width: 122px; height: 31px; margin: -37px -10px 0 0; padding: 0; background: url(../files/images/buttons/btn-submit.png) no-repeat; background-size: 244px auto; border: 0; font-size: 18px; font-size: 1.8rem; line-height: 1; font-family: 'Franchise Regular'; color: #426f8f; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3), 0 -1px 0 rgba(0, 0, 0, 0.5); text-indent: 65px !important; text-transform: uppercase; }
+	input[type='submit'] { float: right; width: 122px; height: 31px; margin: -30px -10px 0 0; padding: 0; background: url(../files/images/buttons/btn-submit.png) no-repeat; background-size: 244px auto; border: 0; font-size: 18px; font-size: 1.8rem; line-height: 1; font-family: 'Franchise Regular'; color: #426f8f; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3), 0 -1px 0 rgba(0, 0, 0, 0.5); text-indent: 65px !important; text-transform: uppercase; }
 		input[type='submit']:active { background-position: -123px 0; }
 
 /* Placeholder */
@@ -183,7 +183,7 @@ h1, .buttonWell { height: 25px; margin: 0 0 8px; padding: 5px 0 0;
 box-shadow: 0 8px 8px 0 rgba(185,179,155,0.3); font-size: 14px; font-size: 1.4rem; font-family: 'Open Sans Condensed Bold'; color: #333; }
 
 	h1 em, .answer { display: inline-block; width: 27px; height: 30px; margin: -5px 5px 0 0; padding: 0; background: url(../files/images/backgrounds/bkg-markers.png) no-repeat 0 0; background-size: 162px auto; text-indent: -200px; vertical-align: middle; }
-	.answer { width: 200px; height: 22px; padding: 8px 0 0 35px; background-image: url(../files/images/backgrounds/bkg-markers.png); background-position: -135px 0; text-indent: 0; }
+	.answer { width: 140px; height: 22px; padding: 8px 0 0 35px; background-image: url(../files/images/backgrounds/bkg-markers.png); background-position: -135px 0; text-indent: 0; }
 	
 	.secondQuestion { background-position: -27px 0; }
 	.thirdQuestion { background-position: -54px 0; }	
