@@ -110,53 +110,53 @@ article h1 { width: 300px; height: 43px; margin: 10px 0 10px 0; padding: 8px 0 0
 .rotaryBtn:active { background-position: -133px 0; }
 .touchBtn { display: block; position: absolute; top: 260px; left: 170px; width: 133px; height: 81px; background: url(../files/images/buttons/btn-select-touch.png) no-repeat 0 0; background-size: 266px 81px; }
 .touchBtn:active { background-position: -133px 0; }
-.hook { display: block; position: absolute; top: 130px; left: 202px; z-index: 990; width: 75px; height: 58px; background:url(../files/images/backgrounds/bkg-hook.png) no-repeat 0 0; background-size: 75px 58px; }
+.hook { display: block; position: absolute; top: 142px; left: 202px; z-index: 990; width: 75px; height: 58px; background:url(../files/images/backgrounds/bkg-hook.png) no-repeat 0 0; background-size: 75px 58px; }
 article p { padding: 0 20px; font-size: 1.8rem; color: #fff; }
 article p a { color: #fff; text-decoration: underline; font-family: "Bryant Medium"; font-size: 1.5rem; }
 
 .touchTone { float: left; position: relative; left: 50%; margin: 25px 0 0 -116px; width: 160px; -webkit-user-select: none; }
 .touchTone li { display: block; float: left; width: 47px; height: 49px; margin: 0 5px 3px 0; background: url(../files/images/backgrounds/bkg-touch-tone-key.png) no-repeat 0 0; background-size: 95px 49px; }
-.touchTone li span { display: block; width: 47px; height: 37px; padding: 10px 0 0 0; color: #3f454a; text-decoration: none; -webkit-user-select: none; cursor: pointer; }
+.touchTone li button { display: block; width: 47px; height: 37px; padding: 10px 0 0 0; background: transparent; border: 0; color: #3f454a; text-decoration: none; -webkit-user-select: none; cursor: pointer; outline: 0; }
 .touchTone li:active { background-position: -47px 0; }
 .touchTone li span.deleteNumber, .touchTone li span.clearButton { padding: 12px 0 0 0; height: 35px; }
 
 .numberArea { float: left; width: 245px; height: 49px; margin-top: 20px; margin-left: -5px; background: url(../files/images/backgrounds/bkg-number-field.png) no-repeat 0 0; background-size: 245px 49px; -webkit-user-select: none; }
-	.numberArea input.ui-input-text { padding: 0; background: transparent; border: 0; color: #ffdb1c; font-family: 'Bryant Medium'; font-size: 22px !important; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; }
-	.countryCode { float: left; width: 70px !important; margin: 0 10px 0 0; padding: 0 0 0 10px !important; color: #fff; text-align: center; }
-	.phoneNumber { float: left; width: 160px !important; padding: 0 0 0 10px; color: #fff; }
+	.numberArea input { padding: 12px 0 0; background: transparent; border: 0; color: #ffdb1c; font-family: 'Bryant Medium'; font-size: 22px !important; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; }
+	.countryCode { float: left; width: 70px !important; margin: 0; padding-left: 10px !important; color: #fff; text-align: center; }
+	.phoneNumber { float: left; width: 155px !important; padding: 0 0 0 5px; color: #fff; }
 .callButton { display: block; float: left; width: 60px; height: 49px; margin-top: 20px; background: url(../files/images/links/link-call.png) no-repeat 0 0; background-size: 128px 49px; }
 	.callButton:active { background-position: -64px 0; }
-.numberArea input.ui-input-text::-webkit-input-placeholder { color: #ffdb1c; }
-.numberArea input.ui-input-text::-moz-placeholder { color: #ffdb1c; }
-.numberAreaRotary input.ui-input-text::-webkit-input-placeholder { color: #ffdb1c; }
-.numberAreaRotary input.ui-input-text::-moz-placeholder { color: #ffdb1c; }
+.numberArea input::-webkit-input-placeholder { color: #ffdb1c; }
+.numberArea input::-moz-placeholder { color: #ffdb1c; }
+.numberAreaRotary input::-webkit-input-placeholder { color: #ffdb1c; }
+.numberAreaRotary input::-moz-placeholder { color: #ffdb1c; }
 
-#rotaryHolder { position: absolute; left: 21px; top: 77px; z-index:950; width: 256px; height: 256px; background: url(../files/images/backgrounds/bkg-rotary-dial.png) no-repeat 0 0; background-size: 230px 256px; border-radius: 50%; }
+#rotaryHolder { position: absolute; left: 21px; top: 89px; z-index:950; width: 256px; height: 256px; background: url(../files/images/backgrounds/bkg-rotary-dial.png) no-repeat 0 0; background-size: 230px 256px; border-radius: 50%; }
 ol.rotary {  -webkit-user-select: none; }
 ol.rotary li { position: absolute; z-index: 999; list-style: none; border-radius: 50%; }
-	ol.rotary li span { display: block; width: 45px; height: 35px; padding: 10px 0 0 0; color: #3f454a; text-decoration: none; -webkit-user-select: none; border-radius: 50%; text-align: center; cursor: pointer; }
-	ol.rotary li span:active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,1.0); }
-	.rotary li.dial1 { top: 112px; left: 195px; }
-	.rotary li.dial2 { top: 87px; left: 152px; }
-	.rotary li.dial3 { top: 87px; left: 101px; }
-	.rotary li.dial4 { top: 112px; left: 57px; }
-	.rotary li.dial5 { top: 156px; left: 32px; }
-	.rotary li.dial6 { top: 206px; left: 32px; }
-	.rotary li.dial7 { top: 250px; left: 57px; }
-	.rotary li.dial8 { top: 275px; left: 101px; }
-	.rotary li.dial9 { top: 275px; left: 151px; }
-	.rotary li.dial0 { top: 250px; left: 195px; }
+	ol.rotary li button { display: block; width: 45px; height: 35px; padding: 10px 0 0 0; background: transparent; color: #3f454a; text-decoration: none; -webkit-user-select: none; border: 0; border-radius: 50%; text-align: center; cursor: pointer; outline: 0; }
+	ol.rotary li button:active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,1.0); }
+	.rotary li.dial1 { top: 124px; left: 195px; }
+	.rotary li.dial2 { top: 99px; left: 152px; }
+	.rotary li.dial3 { top: 99px; left: 101px; }
+	.rotary li.dial4 { top: 124px; left: 57px; }
+	.rotary li.dial5 { top: 168px; left: 32px; }
+	.rotary li.dial6 { top: 218px; left: 32px; }
+	.rotary li.dial7 { top: 262px; left: 57px; }
+	.rotary li.dial8 { top: 287px; left: 101px; }
+	.rotary li.dial9 { top: 287px; left: 151px; }
+	.rotary li.dial0 { top: 262px; left: 195px; }
 
-.numberAreaRotary { position: absolute; top: 156px; left: 95px; width: 126px; height: 57px; margin-top: 20px; margin-left: -5px; background: url(../files/images/backgrounds/bkg-rotary-number-field.png) no-repeat 0 0; background-size: 126px 57px; -webkit-user-select: none; }
-	.numberAreaRotary input.ui-input-text { padding: 0; background: transparent; border: 0; color: #ffdb1c; font-family: 'Bryant Medium'; font-size: 15px !important; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; }
+.numberAreaRotary { position: absolute; top: 168px; left: 95px; width: 126px; height: 57px; margin-top: 20px; margin-left: -5px; background: url(../files/images/backgrounds/bkg-rotary-number-field.png) no-repeat 0 0; background-size: 126px 57px; -webkit-user-select: none; }
+	.numberAreaRotary input { padding: 0; background: transparent; border: 0; color: #ffdb1c; font-family: 'Bryant Medium'; font-size: 15px !important; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; }
 	.numberAreaRotary .countryCode { float: left; width: 105px !important; height: 17px !important; margin: 7px 10px 0 10px; padding: 0 0 0 0 !important; color: #fff; text-align: center; }
-	.numberAreaRotary .phoneNumber { float: left; width: 105px !important; height: 27px !important; margin: 2px 10px 0 10px; padding: 0 0 0 10px; color: #fff; text-align: center; }
-body.rotary .callButtonBkg { position: absolute; left: 212px; top: 178px; z-index: 900; display: block; width: 68px; height: 57px; background: url(../files/images/buttons/btn-call-rotary.png) no-repeat 0 0; background-size: 136px 57px; }
+	.numberAreaRotary .phoneNumber { float: left; width: 105px !important; height: 27px !important; margin: 2px 10px 0 0; padding: 0 0 0 10px; color: #fff; text-align: center; }
+body.rotary .callButtonBkg { position: absolute; left: 212px; top: 190px; z-index: 900; display: block; width: 68px; height: 57px; background: url(../files/images/buttons/btn-call-rotary.png) no-repeat 0 0; background-size: 136px 57px; }
 	body.rotary .callButtonBkg.pressed { background-position: -68px 0; }
-body.rotary .callButton { background: transparent; position: absolute; left: 212px; top: 158px; z-index: 999; }
-body.rotary .deleteButton { position: absolute; left: 113px; top: 236px; z-index: 999; display: block; width: 74px; height: 32px; background: url(../files/images/buttons/btn-del-rotary.png) no-repeat 0 0; background-size: 148px 32px; }
+body.rotary .callButton { background: transparent; position: absolute; left: 212px; top: 170px; z-index: 999; }
+body.rotary .deleteButton { position: absolute; left: 113px; top: 248px; z-index: 999; display: block; width: 74px; height: 32px; background: url(../files/images/buttons/btn-del-rotary.png) no-repeat 0 0; background-size: 148px 32px; }
 	body.rotary .deleteButton:active { background-position: -74px 0; }
-body.rotary .clearButton { position: absolute; left: 113px; top: 142px; z-index: 999; display: block; width: 73px; height: 31px; background: url(../files/images/buttons/btn-clear-rotary.png) no-repeat 0 0; background-size: 146px 31px; }
+body.rotary .clearButton { position: absolute; left: 113px; top: 154px; z-index: 999; display: block; width: 73px; height: 31px; background: url(../files/images/buttons/btn-clear-rotary.png) no-repeat 0 0; background-size: 146px 31px; }
 	body.rotary .clearButton:active { background-position: -73px 0; }
 
 /* Footer */
@@ -168,7 +168,7 @@ footer { width:316px; height: 16px; margin: 0 auto; padding: 15px 0; background-
 /* 
 	Menu Navigation
 -----------------------------*/
-.menuNavigation { position: absolute; top: 27px; right: -274px; z-index: 1000; width: 100%; max-width: 274px; margin:0; }
+.menuNavigation { display: none; position: absolute; top: 27px; right: -274px; z-index: 1000; width: 100%; max-width: 274px; margin:0; }
 	.menuNavigation strong { position: relative; z-index: 4; left: -9px; top: -20px; display: block; width: 36px; height: 53px; margin: 0 0 0 -27px; padding: 0; background: transparent url(../files/images/links/link-menu.png) no-repeat 0 0; background-size: 36px 106px; text-transform: uppercase; text-align: center; }
 	body.openNavigation .menuNavigation strong { margin: 0 0 0 -27px; background-position: 0 -53px; }
 	body.closeNavigation .menuNavigation strong { margin: 0 0 0 -27px; background-position: 0 0; }
@@ -208,11 +208,13 @@ footer { width:316px; height: 16px; margin: 0 auto; padding: 15px 0; background-
 /* jQuery Mobile Style Overrides */	
 
 
-.ui-mobile [data-role="page"], .ui-mobile [data-role="dialog"], .ui-page { position: relative; top: auto; left: auto; width: 320px; }
+/*.ui-mobile [data-role="page"], .ui-mobile [data-role="dialog"], .ui-page { position: relative; top: auto; left: auto; width: 320px; }
 .ui-mobile .ui-page-active { overflow: hidden; }
 .ui-btn { background: url(../files/images/buttons/btn-select-country.png) no-repeat 0 0; width: 309px !important; height: 49px; margin: 12px 0 0 -5px; background-size: 618px 49px; color: #ffdb1c; font-family: 'Bryant Medium'; -webkit-user-select: none; }
 .ui-btn.ui-btn-active { background-position: -309px 0; }
-.ui-btn-inner { padding: 0; margin: 8px; font-size: 26px !important; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; }
+.ui-btn-inner { padding: 0; margin: 8px; font-size: 26px !important; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; }*/
+select { background: url(../files/images/buttons/btn-select-country.png) no-repeat 0 0; width: 309px !important; height: 49px; margin: 12px 0 8px -5px; padding: 0 45px 0 24px; background-size: 618px 49px; border: 0; color: #ffdb1c; font-family: 'Bryant Medium'; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; outline: 0; text-align: center; }
+#simLocation { text-align: center; }
 
 
 /*** iPhone 5 Specfic Styles ***/

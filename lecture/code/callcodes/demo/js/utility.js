@@ -3,8 +3,8 @@ window.onload = function() {
     setTimeout(function(){window.scrollTo(0, 1);}, 1);
 }
 
-if('webkitAudioContext' in window) {
-	var context = new webkitAudioContext();
+if('AudioContext' in window) {
+	var context = new AudioContext();
 	var analyser = context.createAnalyser();
 	var source; 
 	var audio0 = new Audio();   
@@ -53,9 +53,10 @@ if('webkitAudioContext' in window) {
 
 $(document).ready(function(){
 //Start JQuery Code
-	$.mobile.ajaxEnabled = false;
+	/*$.mobile.ajaxEnabled = false;*/
+
 	/* Site Menu */
-	$("#menuLink").toggle(function(){
+	/*$("#menuLink").toggle(function(){
 		$("body").removeClass("closeNavigation").addClass("openNavigation");
 	}, function(){
 		$("body").removeClass("openNavigation").addClass("closeNavigation");
@@ -65,18 +66,18 @@ $(document).ready(function(){
 	});
 	$("#menuLink").swiperight(function() {
 		$("body").removeClass("openNavigation").addClass("closeNavigation");
-	});
+	});*/
 	
 	$("#simLocation").change(function() {
   		$('#countryCode').val("+" + $(this).val());
 	});
 	
-	$(".touchTone li span").not('.touchTone li span.deleteNumber').not('.touchTone li span.clearButton').on( "vmousedown", function() {
+	$(".touchTone button").on( "mousedown", function() {
 		var toneValue = $(this).text();
-		if('webkitAudioContext' in window) { setTone(toneValue); tone1.noteOn(0); tone2.noteOn(0); }
+		if('AudioContext' in window) { setTone(toneValue); tone1.noteOn(0); tone2.noteOn(0); }
 	});
-	$(".touchTone li span").not('.touchTone li span.deleteNumber').not('.touchTone li span.clearButton').on( "vmouseup", function() {
-		if('webkitAudioContext' in window) { tone1.disconnect(0); tone2.disconnect(0); }
+	$(".touchTone button").on( "mouseup", function() {
+		if('AudioContext' in window) { tone1.disconnect(0); tone2.disconnect(0); }
 		var keyValue = $(this).text();
 		$("#phoneNumber").val($('#phoneNumber').val() + keyValue);
 	});
@@ -109,23 +110,23 @@ $(document).ready(function(){
     	return false;
 	});
 	
-	$("body.rotary .callButton").on( "vmousedown", function() {
+	$("body.rotary .callButton").on( "mousedown", function() {
 		$("#callButtonBkg").addClass('pressed');
 	});
-	$("body.rotary .callButton").on( "vmouseup", function() {
+	$("body.rotary .callButton").on( "mouseup", function() {
 		$("#callButtonBkg").removeClass('pressed');
 	});
 	
 	
-	$(".rotary li span").click(function() {
+	$(".rotary button").click(function() {
 		
 		var dialNum = $(this).parent('li').attr('class').replace('dial','');
 		var keyValue = $(this).text();
 		$('#rotaryHolder').addClass('rotate' + dialNum);
-		if('webkitAudioContext' in window) { audio0.play(); }
+		if('AudioContext' in window) { audio0.play(); }
     		setTimeout(function() {
         $('#rotaryHolder').removeClass('rotate' + dialNum);
-		if('webkitAudioContext' in window) { audio0.pause();
+		if('AudioContext' in window) { audio0.pause();
 		audio0.currentTime = 0; }
 		
 		$("#phoneNumber").val($('#phoneNumber').val() + keyValue);
