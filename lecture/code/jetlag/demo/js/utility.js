@@ -3,9 +3,6 @@ window.onload = function() {
     setTimeout(function(){window.scrollTo(0, 1);}, 1);
 }
 
-
-
-
 $(document).ready(function(){
 //Start JQuery Code
 
@@ -111,6 +108,7 @@ function displayLabelImg(count, motion){
 	//Initialization
 	var flag = $("input[type='radio']").length - 1;
 	var imgStop = -1 * ($(".displayBox img").width() - 580);
+	var movePosition = (count + 1) * -290;
 	
 	//Initial Value
 	if (motion == "initial") {
@@ -128,13 +126,13 @@ function displayLabelImg(count, motion){
 					if (count == 0){	
 						$(this).css("left","-290px");
 					} else {
-						$(this).animate({left: "-=290"}, 10);
+						$(this).animate({left: movePosition + "px"}, 10);
 					}
 				} else {
 					if (count == flag){	
 						$(this).css("left", imgStop + "px");	
-					} else {
-						$(this).animate({left: "+=290"}, 10);
+					} else {					
+						$(this).animate({left: movePosition + "px"}, 10);
 					}
 				}
 				$(this).fadeIn(100);
@@ -143,14 +141,14 @@ function displayLabelImg(count, motion){
 		} else {
 		
 			//Slide Transitions
-			if (motion == "next") {
-				$(".displayBox img").animate({left: "-=290"}, 200, function(){
+			if (motion == "next") {		
+				$(".displayBox img").animate({left: movePosition + "px"}, 200, function(){
 					if (count == 0){	
 						$(this).css("left","-290px");
 					}
 				});	
-			} else {
-				$(".displayBox img").animate({left: "+=290"}, 200, function(){
+			} else {			
+				$(".displayBox img").animate({left: movePosition + "px"}, 200, function(){
 					if (count == flag){	
 						$(".displayBox img").css("left", imgStop + "px");	
 					}

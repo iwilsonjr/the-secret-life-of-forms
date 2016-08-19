@@ -304,7 +304,7 @@ footer { float: left; width: 316px; height: 46px; padding: 0; background-color: 
 /* 
 	Menu Navigation
 -----------------------------*/
-.menuNavigation { position: absolute; top: 27px; right: -274px; z-index: 1000; width: 100%; max-width: 274px; margin: 0; }
+.menuNavigation { display: none; position: absolute; top: 27px; right: -274px; z-index: 1000; width: 100%; max-width: 274px; margin: 0; }
 	.menuNavigation strong { position: relative; z-index: 4; left: -9px; top: -20px; display: block; width: 36px; height: 53px; margin: 0 0 0 -27px; padding: 0; background: transparent url(../files/images/links/link-menu.png) no-repeat 0 0; background-size: 36px 106px; text-transform: uppercase; text-align: center; }
 	body.openNavigation .menuNavigation strong { margin: 0 0 0 -27px; background-position: 0 -53px; }
 	body.closeNavigation .menuNavigation strong { margin: 0 0 0 -27px; background-position: 0 0; }
