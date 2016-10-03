@@ -99,7 +99,6 @@ h3 a { text-decoration: none; }
 article { position: relative; width:300px; min-height: 370px; margin: 0 auto; padding:0 0 0 0; text-align: center; }
 article h1 { width: 300px; height: 43px; margin: 10px 0 10px 0; padding: 8px 0 0 0; color: #ffdb1c; font-family: 'Bryant Medium'; font-size: 28px !important; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; }
 
-
 .rotaryImage { position: absolute; left: 13px; top: 70px; display: block; width: 131px; height: 131px; border-radius: 50%; }
 	.rotaryImage:active { opacity: .75; }
 	.rotaryImage img { border-radius: 50%; }
@@ -114,18 +113,23 @@ article h1 { width: 300px; height: 43px; margin: 10px 0 10px 0; padding: 8px 0 0
 article p { padding: 0 20px; font-size: 1.8rem; color: #fff; }
 article p a { color: #fff; text-decoration: underline; font-family: "Bryant Medium"; font-size: 1.5rem; }
 
-.touchTone { float: left; position: relative; left: 50%; margin: 25px 0 0 -116px; width: 160px; -webkit-user-select: none; }
+.touchTone { float: left; position: relative; left: 50%; margin: 16px 0 0 -116px; width: 160px; -webkit-user-select: none; }
 .touchTone li { display: block; float: left; width: 47px; height: 49px; margin: 0 5px 3px 0; background: url(../files/images/backgrounds/bkg-touch-tone-key.png) no-repeat 0 0; background-size: 95px 49px; }
-.touchTone li button { display: block; width: 47px; height: 37px; padding: 10px 0 0 0; background: transparent; border: 0; color: #3f454a; text-decoration: none; -webkit-user-select: none; cursor: pointer; outline: 0; }
+.touchTone button, .touchTone input[type="reset"] { overflow: hidden; display: block; width: 47px; height: 37px; padding: 10px 0 0 0; background: transparent; border: 0; color: #3f454a; text-decoration: none; -webkit-user-select: none; cursor: pointer; outline: 0; }
 .touchTone li:active { background-position: -47px 0; }
-.touchTone li span.deleteNumber, .touchTone li span.clearButton { padding: 12px 0 0 0; height: 35px; }
+.touchTone .deleteNumber, .touchTone .clearButton { padding: 12px 0 0 0; height: 35px; }
+	.touchTone input[type="reset"], .touchTone .clearButton { background: url(../files/images/icons/icon-clear-key-touch.png) no-repeat 50% 16px; background-size: 17px 18px; text-indent: -200px; }
+	.touchTone .deleteNumber { background: url(../files/images/icons/icon-del-key-touch.png) no-repeat 50% 16px; background-size: 17px 18px; text-indent: -200px; }
+
 
 .numberArea { float: left; width: 245px; height: 49px; margin-top: 20px; margin-left: -5px; background: url(../files/images/backgrounds/bkg-number-field.png) no-repeat 0 0; background-size: 245px 49px; -webkit-user-select: none; }
 	.numberArea input { padding: 12px 0 0; background: transparent; border: 0; color: #ffdb1c; font-family: 'Bryant Medium'; font-size: 22px !important; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; }
 	.countryCode { float: left; width: 70px !important; margin: 0; padding-left: 10px !important; color: #fff; text-align: center; }
 	.phoneNumber { float: left; width: 155px !important; padding: 0 0 0 5px; color: #fff; }
-.callButton { display: block; float: left; width: 60px; height: 49px; margin-top: 20px; background: url(../files/images/links/link-call.png) no-repeat 0 0; background-size: 128px 49px; }
-	.callButton:active { background-position: -64px 0; }
+.callButton { overflow: hidden; display: block; float: left; width: 60px; height: 49px; margin-top: 20px; background: url(../files/images/links/link-call.png) no-repeat 0 0; background-size: 128px 49px; border: 0; text-indent: -300px; }
+	.callButton:active, .callButton:focus, [type="submit"][aria-live="polite"] { background-position: -64px 0; }
+
+
 .numberArea input::-webkit-input-placeholder { color: #ffdb1c; }
 .numberArea input::-moz-placeholder { color: #ffdb1c; }
 .numberAreaRotary input::-webkit-input-placeholder { color: #ffdb1c; }
@@ -154,9 +158,9 @@ ol.rotary li { position: absolute; z-index: 999; list-style: none; border-radius
 body.rotary .callButtonBkg { position: absolute; left: 212px; top: 190px; z-index: 900; display: block; width: 68px; height: 57px; background: url(../files/images/buttons/btn-call-rotary.png) no-repeat 0 0; background-size: 136px 57px; }
 	body.rotary .callButtonBkg.pressed { background-position: -68px 0; }
 body.rotary .callButton { background: transparent; position: absolute; left: 212px; top: 170px; z-index: 999; }
-body.rotary .deleteButton { position: absolute; left: 113px; top: 248px; z-index: 999; display: block; width: 74px; height: 32px; background: url(../files/images/buttons/btn-del-rotary.png) no-repeat 0 0; background-size: 148px 32px; }
+body.rotary .deleteButton { position: absolute; left: 113px; top: 248px; z-index: 999; display: block; width: 74px; height: 32px; background: url(../files/images/buttons/btn-del-rotary.png) no-repeat 0 0; background-size: 148px 32px; border: 0; }
 	body.rotary .deleteButton:active { background-position: -74px 0; }
-body.rotary .clearButton { position: absolute; left: 113px; top: 154px; z-index: 999; display: block; width: 73px; height: 31px; background: url(../files/images/buttons/btn-clear-rotary.png) no-repeat 0 0; background-size: 146px 31px; }
+body.rotary .clearButton { position: absolute; left: 113px; top: 154px; z-index: 999; display: block; width: 73px; height: 31px; background: url(../files/images/buttons/btn-clear-rotary.png) no-repeat 0 0; background-size: 146px 31px; border: 0; text-indent: -300px; }
 	body.rotary .clearButton:active { background-position: -73px 0; }
 
 /* Footer */
@@ -214,6 +218,7 @@ footer { width:316px; height: 16px; margin: 0 auto; padding: 15px 0; background-
 .ui-btn.ui-btn-active { background-position: -309px 0; }
 .ui-btn-inner { padding: 0; margin: 8px; font-size: 26px !important; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; }*/
 select { background: url(../files/images/buttons/btn-select-country.png) no-repeat 0 0; width: 309px !important; height: 49px; margin: 12px 0 8px -5px; padding: 0 45px 0 24px; background-size: 618px 49px; border: 0; color: #ffdb1c; font-family: 'Bryant Medium'; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; outline: 0; text-align: center; }
+option { background: #000; }
 #simLocation { text-align: center; }
 
 

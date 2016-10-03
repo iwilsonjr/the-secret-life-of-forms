@@ -253,7 +253,7 @@
       <option value="ZMB">Zambia </option>
       <option value="ZWE">Zimbabwe </option>
     </select>
-    </form>
+
    <ol class="rotary">
     	<li class="dial1"><button type="button">1</button></li>
         <li class="dial2"><button type="button">2</button></li>
@@ -270,14 +270,14 @@
     	<input type="text" name="countryCode" id="countryCode" class="countryCode" maxlength="4" readonly />
         <input type="text" name="phoneNumber" id="phoneNumber" class="phoneNumber" maxlength="11" placeholder="Enter #" readonly />
    	</div>
-   <a href="#" class="deleteButton"></a>
-   <a href="#" class="clearButton"></a>
-   <a href="#" class="callButton"></a>
+   <button type="button" class="deleteButton"></button>
+   <input type="reset" class="clearButton" value="Clear Number" />
+   <input type="submit" name="call" value="Call Number" class="callButton" />
    <span class="hook"></span>
    <span id="callButtonBkg" class="callButtonBkg"></span>
     
     <div id="rotaryHolder" class=""></div>
-    
+    </form>    
   </article>
 </div>
 <footer>  </footer>

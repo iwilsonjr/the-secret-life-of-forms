@@ -79,7 +79,15 @@ $(document).ready(function(){
 	$(".touchTone button").on( "mouseup", function() {
 		if('AudioContext' in window) { tone1.disconnect(0); tone2.disconnect(0); }
 		var keyValue = $(this).text();
-		$("#phoneNumber").val($('#phoneNumber').val() + keyValue);
+
+		if ($('#phoneNumber').val().length > 9) {
+			$(".callButton").attr("aria-live","polite");
+			return false;
+		} else {
+			$("#phoneNumber").val($('#phoneNumber').val() + keyValue);				
+			$(".callButton").removeAttr("aria-live");			
+		}
+
 	});
 	
 	
@@ -97,18 +105,24 @@ $(document).ready(function(){
         	return value.substr(0,value.length-1);
 		})
 	});
-	$(".clearButton").click(function() {
+	/*$(".clearButton").click(function() {
   		$('#phoneNumber').val("");
-	});
+	});*/
+
+
 
 	$(".callButton").click(function() {
 		var countryCode = $('#countryCode').val();
 		var phoneNumber = $('#phoneNumber').val();
 		var hrefContent = "tel:" + countryCode + phoneNumber;
-  		$(this).attr("href", hrefContent); 
-		location.href = href;
+  		//$(this).attr("href", hrefContent); 
+		location.href = hrefContent;
     	return false;
 	});
+
+	$(".callButton").submit(function() {
+    	return false;
+	});	
 	
 	$("body.rotary .callButton").on( "mousedown", function() {
 		$("#callButtonBkg").addClass('pressed');

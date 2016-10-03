@@ -253,7 +253,8 @@
       <option value="ZMB">Zambia </option>
       <option value="ZWE">Zimbabwe </option>
     </select>
-    </form>
+
+
     <ol class="touchTone">
     	<li><button type="button">1</button></li>
         <li><button type="button">2</button></li>
@@ -264,15 +265,16 @@
         <li><button type="button">7</button></li>
         <li><button type="button">8</button></li>
         <li><button type="button">9</button></li>
-        <li><span class="clearButton"><img src="files/images/icons/icon-clear-key-touch.png" width="17" height="18" alt="Clear" /></span></li>
+        <li><input type="reset" class="clearButton" value="Clear Number" /></li>
         <li><button type="button">0</button></li>
-        <li><span class="deleteNumber"><img src="files/images/icons/icon-del-key-touch.png" width="17" height="18" alt="<" /></span></li>
+        <li><button type="button" class="deleteNumber"></button></li>
 	</ol>
     <div class="numberArea">
     	<input type="text" name="countryCode" id="countryCode" class="countryCode" maxlength="4" readonly />
         <input type="text" name="phoneNumber" id="phoneNumber" class="phoneNumber" placeholder="Enter #" readonly />
    	</div>
-    <a href="#" class="callButton"></a>
+    <input type="submit" name="call" value="Call Number" class="callButton" />
+  </form>
   </article>
 </div>
 <footer>  </footer>
