@@ -89,6 +89,7 @@ body.rotary { background: url(../files/images/backgrounds/bkg-rotary.jpg) no-rep
 .container { overflow: hidden; width: 320px; margin: 0 auto; padding: 0; position: relative; }
 header { margin: 5px 0 -15px 10px; }
 	header img { position: relative; z-index: 5; }
+	a:focus, a:active, select:focus, select:active { outline: 1px solid #fff; }
 	
 h3 { font-weight: normal; text-decoration: none; }
 h3 a { text-decoration: none; }
@@ -115,7 +116,8 @@ article p a { color: #fff; text-decoration: underline; font-family: "Bryant Medi
 
 .touchTone { float: left; position: relative; left: 50%; margin: 16px 0 0 -116px; width: 160px; -webkit-user-select: none; }
 .touchTone li { display: block; float: left; width: 47px; height: 49px; margin: 0 5px 3px 0; background: url(../files/images/backgrounds/bkg-touch-tone-key.png) no-repeat 0 0; background-size: 95px 49px; }
-.touchTone button, .touchTone input[type="reset"] { overflow: hidden; display: block; width: 47px; height: 37px; padding: 10px 0 0 0; background: transparent; border: 0; color: #3f454a; text-decoration: none; -webkit-user-select: none; cursor: pointer; outline: 0; }
+.touchTone button, .touchTone input[type="reset"] { overflow: hidden; display: block; width: 47px; height: 37px; padding: 10px 0 0 0; background: transparent; border: 0; color: #3f454a; text-decoration: none; -webkit-user-select: none; cursor: pointer; }
+.touchTone button:focus, .touchTone input[type="reset"]:focus, .touchTone button:active, .touchTone input[type="reset"]:active { outline: 1px solid #fff; }
 .touchTone li:active { background-position: -47px 0; }
 .touchTone .deleteNumber, .touchTone .clearButton { padding: 12px 0 0 0; height: 35px; }
 	.touchTone input[type="reset"], .touchTone .clearButton { background: url(../files/images/icons/icon-clear-key-touch.png) no-repeat 50% 16px; background-size: 17px 18px; text-indent: -200px; }
@@ -126,8 +128,9 @@ article p a { color: #fff; text-decoration: underline; font-family: "Bryant Medi
 	.numberArea input { padding: 12px 0 0; background: transparent; border: 0; color: #ffdb1c; font-family: 'Bryant Medium'; font-size: 22px !important; text-shadow: 0 0 10px rgba(255,84,0,1.0); -webkit-text-stroke: 1px rgba(255,84,0,0.75); -webkit-user-select: none; }
 	.countryCode { float: left; width: 70px !important; margin: 0; padding-left: 10px !important; color: #fff; text-align: center; }
 	.phoneNumber { float: left; width: 155px !important; padding: 0 0 0 5px; color: #fff; }
+	.countryCode:focus, .phoneNumber:focus { outline: 1px solid #fff; }
 .callButton { overflow: hidden; display: block; float: left; width: 60px; height: 49px; margin-top: 20px; background: url(../files/images/links/link-call.png) no-repeat 0 0; background-size: 128px 49px; border: 0; text-indent: -300px; }
-	.callButton:active, .callButton:focus, [type="submit"][aria-live="polite"] { background-position: -64px 0; }
+	.callButton:active, .callButton:focus, [type="submit"][aria-live="polite"] { background-position: -64px 0; outline: 1px solid #fff; }
 
 
 .numberArea input::-webkit-input-placeholder { color: #ffdb1c; }
